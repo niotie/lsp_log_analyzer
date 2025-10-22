@@ -4,53 +4,53 @@ Content-Length: 1430
 
 {"id":"register_lean_watcher","jsonrpc":"2.0","method":"client/registerCapability","params":{"registrations":[{"id":"lean_watcher","method":"workspace/didChangeWatchedFiles","registerOptions":{"watchers":[{"globPattern":"**/*.lean","kind":null},{"globPattern":"**/*.ilean","kind":null}]}}]}}Content-Length: 268
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":0}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 36
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":0}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 36
 
 {"id":2,"jsonrpc":"2.0","result":[]}Content-Length: 180
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[],"uri":"Example.lean","version":1}}Content-Length: 268
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}Content-Length: 268
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":0}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 180
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":0}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 180
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[],"uri":"Example.lean","version":1}}Content-Length: 268
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}Content-Length: 268
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":0}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 354
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":0}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 354
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":23,"line":0},"start":{"character":0,"line":0}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":2}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 353
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":23,"line":0},"start":{"character":0,"line":0}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":2}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 353
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":0},"start":{"character":0,"line":0}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":2}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 353
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":0},"start":{"character":0,"line":0}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":2}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 353
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":0},"start":{"character":0,"line":0}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":2}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 268
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":0},"start":{"character":0,"line":0}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":2}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 268
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":2}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 354
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":2}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 354
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 439
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 439
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":3}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 224
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":3}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 224
 
 {"id":1,"jsonrpc":"2.0","result":[{"kind":6,"name":"imp_trans","range":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}},"selectionRange":{"end":{"character":17,"line":2},"start":{"character":8,"line":2}}}]}Content-Length: 439
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":3}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 525
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":3}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 525
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":3},"start":{"character":2,"line":3}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":4}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 79
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":3},"start":{"character":2,"line":3}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":4}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 79
 
 {"id":3,"jsonrpc":"2.0","result":[{"endLine":6,"kind":"region","startLine":2}]}Content-Length: 525
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":3},"start":{"character":2,"line":3}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":4}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 224
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":3},"start":{"character":2,"line":3}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":4}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 224
 
 {"id":4,"jsonrpc":"2.0","result":[{"kind":6,"name":"imp_trans","range":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}},"selectionRange":{"end":{"character":17,"line":2},"start":{"character":8,"line":2}}}]}Content-Length: 525
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":11,"line":5},"start":{"character":2,"line":5}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":6}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 439
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":11,"line":5},"start":{"character":2,"line":5}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":6}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 439
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":6}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 353
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":10,"line":6},"start":{"character":2,"line":6}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 353
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 428
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[{"kind":1,"range":{"end":{"character":0,"line":2},"start":{"character":0,"line":2}}},{"kind":1,"range":{"end":{"character":0,"line":7},"start":{"character":0,"line":7}}}],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 428
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}},"isSilent":true,"leanTags":[2],"message":"Goals accomplished!","range":{"end":{"character":0,"line":3},"start":{"character":0,"line":2}},"severity":3,"source":"Lean 4"}],"uri":"Example.lean","version":1}}Content-Length: 184
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}},"isSilent":true,"leanTags":[2],"message":"Goals accomplished!","range":{"end":{"character":0,"line":3},"start":{"character":0,"line":2}},"severity":3,"source":"Lean 4"}],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 184
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":1}}}Content-Length: 266
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":1}}}Content-Length: 266
 
 {"id":5,"jsonrpc":"2.0","result":{"data":[0,0,8,0,0,0,10,1,1,0,0,2,1,1,0,0,2,1,1,0,2,0,7,0,0,0,19,3,1,0,0,6,1,1,0,0,4,1,1,0,0,4,3,1,0,0,6,1,1,0,0,4,1,1,0,0,5,1,1,0,0,4,1,1,0,0,5,2,0,0,1,2,5,0,0,0,6,2,1,0,1,2,5,0,0,0,6,3,1,0,1,2,5,0,0,0,6,3,1,0,1,2,5,0,0,0,6,2,1,0]}}Content-Length: 69
 
@@ -160,11 +160,11 @@ Content-Length: 1430
 
 {"id":57,"jsonrpc":"2.0","result":[]}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":2}}}Content-Length: 184
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":2}}}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":2}}}Content-Length: 468
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":2}}}Content-Length: 468
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":11,"line":5},"start":{"character":57,"line":2}},"leanTags":[1],"message":"unsolved goals\np q r : Prop\nhpq : p → q\nhqr : q → r\nhp : p\n⊢ p","range":{"end":{"character":0,"line":3},"start":{"character":57,"line":2}},"severity":1,"source":"Lean 4"}],"uri":"Example.lean","version":2}}Content-Length: 80
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":11,"line":5},"start":{"character":57,"line":2}},"leanTags":[1],"message":"unsolved goals\np q r : Prop\nhpq : p → q\nhqr : q → r\nhp : p\n⊢ p","range":{"end":{"character":0,"line":3},"start":{"character":57,"line":2}},"severity":1,"source":"Lean 4"}],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":2}}Content-Length: 80
 
 {"id":58,"jsonrpc":"2.0","result":[{"endLine":5,"kind":"region","startLine":2}]}Content-Length: 247
 
@@ -194,11 +194,11 @@ Content-Length: 1430
 
 {"id":69,"jsonrpc":"2.0","result":[{"endLine":5,"kind":"region","startLine":2}]}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":3}}}Content-Length: 184
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":3}}}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":3}}}Content-Length: 468
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":3}}}Content-Length: 468
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":11,"line":5},"start":{"character":57,"line":2}},"leanTags":[1],"message":"unsolved goals\np q r : Prop\nhpq : p → q\nhqr : q → r\nhp : p\n⊢ p","range":{"end":{"character":0,"line":3},"start":{"character":57,"line":2}},"severity":1,"source":"Lean 4"}],"uri":"Example.lean","version":3}}Content-Length: 247
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":11,"line":5},"start":{"character":57,"line":2}},"leanTags":[1],"message":"unsolved goals\np q r : Prop\nhpq : p → q\nhqr : q → r\nhp : p\n⊢ p","range":{"end":{"character":0,"line":3},"start":{"character":57,"line":2}},"severity":1,"source":"Lean 4"}],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":3}}Content-Length: 247
 
 {"id":70,"jsonrpc":"2.0","result":{"data":[0,0,8,0,0,0,10,1,1,0,0,2,1,1,0,0,2,1,1,0,2,0,7,0,0,0,19,3,1,0,0,6,1,1,0,0,4,1,1,0,0,4,3,1,0,0,6,1,1,0,0,4,1,1,0,0,5,1,1,0,0,4,1,1,0,0,5,2,0,0,1,2,5,0,0,0,6,2,1,0,1,2,5,0,0,0,6,3,1,0,1,2,5,0,0,0,6,3,1,0]}}Content-Length: 225
 
@@ -228,11 +228,11 @@ Content-Length: 1430
 
 {"id":82,"jsonrpc":"2.0","result":[{"endLine":6,"kind":"region","startLine":2}]}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":5}}}Content-Length: 184
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":5}}}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":5}}}Content-Length: 679
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":5}}}Content-Length: 679
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":3,"line":6},"start":{"character":3,"line":6}},"message":"unknown tactic","range":{"end":{"character":3,"line":6},"start":{"character":3,"line":6}},"severity":1,"source":"Lean 4"},{"fullRange":{"end":{"character":4,"line":6},"start":{"character":57,"line":2}},"leanTags":[1],"message":"unsolved goals\np q r : Prop\nhpq : p → q\nhqr : q → r\nhp : p\n⊢ p","range":{"end":{"character":0,"line":3},"start":{"character":57,"line":2}},"severity":1,"source":"Lean 4"}],"uri":"Example.lean","version":5}}Content-Length: 62
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":3,"line":6},"start":{"character":3,"line":6}},"message":"unknown tactic","range":{"end":{"character":3,"line":6},"start":{"character":3,"line":6}},"severity":1,"source":"Lean 4"},{"fullRange":{"end":{"character":4,"line":6},"start":{"character":57,"line":2}},"leanTags":[1],"message":"unsolved goals\np q r : Prop\nhpq : p → q\nhqr : q → r\nhp : p\n⊢ p","range":{"end":{"character":0,"line":3},"start":{"character":57,"line":2}},"severity":1,"source":"Lean 4"}],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":5}}Content-Length: 62
 
 {"error":{"code":-32800,"message":""},"id":81,"jsonrpc":"2.0"}Content-Length: 37
 
@@ -264,11 +264,11 @@ Content-Length: 1430
 
 {"id":96,"jsonrpc":"2.0","result":[{"endLine":6,"kind":"region","startLine":2}]}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":7}}}Content-Length: 184
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":7}}}Content-Length: 184
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":7}}}Content-Length: 679
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":7}}}Content-Length: 679
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":3,"line":6},"start":{"character":3,"line":6}},"message":"unknown tactic","range":{"end":{"character":3,"line":6},"start":{"character":3,"line":6}},"severity":1,"source":"Lean 4"},{"fullRange":{"end":{"character":6,"line":6},"start":{"character":57,"line":2}},"leanTags":[1],"message":"unsolved goals\np q r : Prop\nhpq : p → q\nhqr : q → r\nhp : p\n⊢ p","range":{"end":{"character":0,"line":3},"start":{"character":57,"line":2}},"severity":1,"source":"Lean 4"}],"uri":"Example.lean","version":7}}Content-Length: 47
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":3,"line":6},"start":{"character":3,"line":6}},"message":"unknown tactic","range":{"end":{"character":3,"line":6},"start":{"character":3,"line":6}},"severity":1,"source":"Lean 4"},{"fullRange":{"end":{"character":6,"line":6},"start":{"character":57,"line":2}},"leanTags":[1],"message":"unsolved goals\np q r : Prop\nhpq : p → q\nhqr : q → r\nhp : p\n⊢ p","range":{"end":{"character":0,"line":3},"start":{"character":57,"line":2}},"severity":1,"source":"Lean 4"}],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":7}}Content-Length: 47
 
 {"id":97,"jsonrpc":"2.0","result":{"goals":[]}}Content-Length: 39
 
@@ -312,11 +312,11 @@ Content-Length: 1430
 
 {"id":116,"jsonrpc":"2.0","result":[{"endLine":6,"kind":"region","startLine":2}]}Content-Length: 185
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":10}}}Content-Length: 185
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":10}}}Content-Length: 185
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":10}}}Content-Length: 432
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":10}}}Content-Length: 432
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"code":"lean.unknownIdentifier","fullRange":{"end":{"character":9,"line":6},"start":{"character":8,"line":6}},"message":"Unknown identifier `h`","range":{"end":{"character":9,"line":6},"start":{"character":8,"line":6}},"severity":1,"source":"Lean 4"}],"uri":"Example.lean","version":10}}Content-Length: 48
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"code":"lean.unknownIdentifier","fullRange":{"end":{"character":9,"line":6},"start":{"character":8,"line":6}},"message":"Unknown identifier `h`","range":{"end":{"character":9,"line":6},"start":{"character":8,"line":6}},"severity":1,"source":"Lean 4"}],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":10}}Content-Length: 48
 
 {"id":118,"jsonrpc":"2.0","result":{"goals":[]}}Content-Length: 40
 
@@ -348,11 +348,11 @@ Content-Length: 1430
 
 {"id":128,"jsonrpc":"2.0","result":{"ctx":{"p":"145"},"hyps":[{"fvarIds":["_uniq.8","_uniq.10","_uniq.12"],"isType":true,"names":["p","q","r"],"type":{"tag":[{"info":{"p":"136"},"subexprPos":"/"},{"text":"Prop"}]}},{"fvarIds":["_uniq.26"],"names":["hpq"],"type":{"tag":[{"info":{"p":"137"},"subexprPos":"/"},{"append":[{"tag":[{"info":{"p":"138"},"subexprPos":"/0"},{"text":"p"}]},{"text":" → "},{"tag":[{"info":{"p":"139"},"subexprPos":"/1"},{"text":"q"}]}]}]}},{"fvarIds":["_uniq.27"],"names":["hqr"],"type":{"tag":[{"info":{"p":"140"},"subexprPos":"/"},{"append":[{"tag":[{"info":{"p":"141"},"subexprPos":"/0"},{"text":"q"}]},{"text":" → "},{"tag":[{"info":{"p":"142"},"subexprPos":"/1"},{"text":"r"}]}]}]}},{"fvarIds":["_uniq.29"],"names":["hp"],"type":{"tag":[{"info":{"p":"143"},"subexprPos":"/"},{"text":"p"}]}}],"range":{"end":{"character":10,"line":6},"start":{"character":8,"line":6}},"term":{"p":"146"},"type":{"tag":[{"info":{"p":"144"},"subexprPos":"/"},{"text":"p"}]}}}Content-Length: 185
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":11}}}Content-Length: 185
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":11}}}Content-Length: 185
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":11}}}Content-Length: 429
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":11}}}Content-Length: 429
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}},"isSilent":true,"leanTags":[2],"message":"Goals accomplished!","range":{"end":{"character":0,"line":3},"start":{"character":0,"line":2}},"severity":3,"source":"Lean 4"}],"uri":"Example.lean","version":11}}Content-Length: 81
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}},"isSilent":true,"leanTags":[2],"message":"Goals accomplished!","range":{"end":{"character":0,"line":3},"start":{"character":0,"line":2}},"severity":3,"source":"Lean 4"}],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":11}}Content-Length: 81
 
 {"id":131,"jsonrpc":"2.0","result":[{"endLine":6,"kind":"region","startLine":2}]}Content-Length: 48
 
@@ -376,7 +376,7 @@ Content-Length: 1430
 
 {"id":142,"jsonrpc":"2.0","result":{"contents":{"kind":"markdown","value":"```lean\nhqr : q → r\n```"},"range":{"end":{"character":36,"line":2},"start":{"character":33,"line":2}}}}Content-Length: 389
 
-{"id":143,"jsonrpc":"2.0","result":[{"originSelectionRange":{"end":{"character":36,"line":2},"start":{"character":33,"line":2}},"targetRange":{"end":{"character":36,"line":2},"start":{"character":33,"line":2}},"targetSelectionRange":{"end":{"character":36,"line":2},"start":{"character":33,"line":2}},"targetUri":"Example.lean"}]}Content-Length: 38
+{"id":143,"jsonrpc":"2.0","result":[{"originSelectionRange":{"end":{"character":36,"line":2},"start":{"character":33,"line":2}},"targetRange":{"end":{"character":36,"line":2},"start":{"character":33,"line":2}},"targetSelectionRange":{"end":{"character":36,"line":2},"start":{"character":33,"line":2}},"targetUri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}]}Content-Length: 38
 
 {"id":141,"jsonrpc":"2.0","result":[]}Content-Length: 38
 
@@ -384,11 +384,11 @@ Content-Length: 1430
 
 {"id":145,"jsonrpc":"2.0","result":[{"endLine":6,"kind":"region","startLine":2}]}Content-Length: 185
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":12}}}Content-Length: 185
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":12}}}Content-Length: 185
 
-{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"Example.lean","version":12}}}Content-Length: 429
+{"jsonrpc":"2.0","method":"$/lean/fileProgress","params":{"processing":[],"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":12}}}Content-Length: 429
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}},"isSilent":true,"leanTags":[2],"message":"Goals accomplished!","range":{"end":{"character":0,"line":3},"start":{"character":0,"line":2}},"severity":3,"source":"Lean 4"}],"uri":"Example.lean","version":12}}Content-Length: 48
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"fullRange":{"end":{"character":10,"line":6},"start":{"character":0,"line":2}},"isSilent":true,"leanTags":[2],"message":"Goals accomplished!","range":{"end":{"character":0,"line":3},"start":{"character":0,"line":2}},"severity":3,"source":"Lean 4"}],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":12}}Content-Length: 48
 
 {"id":146,"jsonrpc":"2.0","result":{"goals":[]}}Content-Length: 50
 
@@ -408,6 +408,6 @@ Content-Length: 1430
 
 {"error":{"code":-32800,"message":""},"id":153,"jsonrpc":"2.0"}Content-Length: 175
 
-{"error":{"code":-32801,"message":"The file worker for Example.lean has been terminated."},"id":154,"jsonrpc":"2.0"}Content-Length: 181
+{"error":{"code":-32801,"message":"The file worker for file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean has been terminated."},"id":154,"jsonrpc":"2.0"}Content-Length: 181
 
-{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[],"uri":"Example.lean","version":12}}Content-Length: 276
+{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[],"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":12}}Content-Length: 276

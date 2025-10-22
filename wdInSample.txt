@@ -1,373 +1,373 @@
 Content-Length: 391
 
-{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"Example.lean","languageId":"lean4","version":1,"text":"variable {p q r : Prop}\n\ntheorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by\n  intro hp\n  apply hqr  -- et pas hpq !\n  apply hpq\n  exact hp\n"},"dependencyBuildMode":"never"}}Content-Length: 171
+{"jsonrpc":"2.0","method":"textDocument/didOpen","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","languageId":"lean4","version":1,"text":"variable {p q r : Prop}\n\ntheorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by\n  intro hp\n  apply hqr  -- et pas hpq !\n  apply hpq\n  exact hp\n"},"dependencyBuildMode":"never"}}Content-Length: 171
 
-{"jsonrpc":"2.0","id":1,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 240
+{"jsonrpc":"2.0","id":1,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 240
 
-{"jsonrpc":"2.0","id":2,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 60
+{"jsonrpc":"2.0","id":2,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 60
 
 {"jsonrpc":"2.0","id":"register_lean_watcher","result":null}Content-Length: 169
 
-{"jsonrpc":"2.0","id":3,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 171
+{"jsonrpc":"2.0","id":3,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 171
 
-{"jsonrpc":"2.0","id":4,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 176
+{"jsonrpc":"2.0","id":4,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 176
 
-{"jsonrpc":"2.0","id":5,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 145
+{"jsonrpc":"2.0","id":5,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 145
 
-{"jsonrpc":"2.0","id":6,"method":"$/lean/rpc/connect","params":{"uri":"Example.lean"}}Content-Length: 416
+{"jsonrpc":"2.0","id":6,"method":"$/lean/rpc/connect","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}Content-Length: 416
 
-{"jsonrpc":"2.0","id":7,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":1,"character":0}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 419
+{"jsonrpc":"2.0","id":7,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":1,"character":0}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 419
 
-{"jsonrpc":"2.0","id":8,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":1,"character":0}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 377
+{"jsonrpc":"2.0","id":8,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":1,"character":0}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 377
 
-{"jsonrpc":"2.0","id":9,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":1,"character":0},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 322
+{"jsonrpc":"2.0","id":9,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":1,"character":0},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 322
 
-{"jsonrpc":"2.0","id":10,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":1,"end":2}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 38
+{"jsonrpc":"2.0","id":10,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":1,"end":2}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 38
 
 {"jsonrpc":"2.0","id":0,"result":null}Content-Length: 417
 
-{"jsonrpc":"2.0","id":11,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":1,"character":0}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":11,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":1,"character":0}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":12,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":1,"character":0}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 378
+{"jsonrpc":"2.0","id":12,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":1,"character":0}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 378
 
-{"jsonrpc":"2.0","id":13,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":1,"character":0},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 322
+{"jsonrpc":"2.0","id":13,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":1,"character":0},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 322
 
-{"jsonrpc":"2.0","id":14,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":1,"end":2}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 241
+{"jsonrpc":"2.0","id":14,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":1,"end":2}},"sessionId":"2498290313890612314","position":{"line":1,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 241
 
-{"jsonrpc":"2.0","id":15,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 212
+{"jsonrpc":"2.0","id":15,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 212
 
-{"jsonrpc":"2.0","id":16,"method":"textDocument/documentHighlight","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":2,"character":59}}}Content-Length: 419
+{"jsonrpc":"2.0","id":16,"method":"textDocument/documentHighlight","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":2,"character":59}}}Content-Length: 419
 
-{"jsonrpc":"2.0","id":17,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":2,"character":59}},"sessionId":"2498290313890612314","position":{"line":2,"character":59},"textDocument":{"uri":"Example.lean"}}}Content-Length: 422
+{"jsonrpc":"2.0","id":17,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":2,"character":59}},"sessionId":"2498290313890612314","position":{"line":2,"character":59},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 422
 
-{"jsonrpc":"2.0","id":18,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":2,"character":59}},"sessionId":"2498290313890612314","position":{"line":2,"character":59},"textDocument":{"uri":"Example.lean"}}}Content-Length: 380
+{"jsonrpc":"2.0","id":18,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":2,"character":59}},"sessionId":"2498290313890612314","position":{"line":2,"character":59},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 380
 
-{"jsonrpc":"2.0","id":19,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":2,"character":59},"sessionId":"2498290313890612314","position":{"line":2,"character":59},"textDocument":{"uri":"Example.lean"}}}Content-Length: 323
+{"jsonrpc":"2.0","id":19,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":2,"character":59},"sessionId":"2498290313890612314","position":{"line":2,"character":59},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 323
 
-{"jsonrpc":"2.0","id":20,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":2,"end":3}},"sessionId":"2498290313890612314","position":{"line":2,"character":59},"textDocument":{"uri":"Example.lean"}}}Content-Length: 289
+{"jsonrpc":"2.0","id":20,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":2,"end":3}},"sessionId":"2498290313890612314","position":{"line":2,"character":59},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 289
 
-{"jsonrpc":"2.0","id":21,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":2,"character":59},"end":{"line":2,"character":59}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 212
+{"jsonrpc":"2.0","id":21,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":2,"character":59},"end":{"line":2,"character":59}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 212
 
-{"jsonrpc":"2.0","id":22,"method":"textDocument/documentHighlight","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":3,"character":10}}}Content-Length: 419
+{"jsonrpc":"2.0","id":22,"method":"textDocument/documentHighlight","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":3,"character":10}}}Content-Length: 419
 
-{"jsonrpc":"2.0","id":23,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":3,"character":10}},"sessionId":"2498290313890612314","position":{"line":3,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 422
+{"jsonrpc":"2.0","id":23,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":3,"character":10}},"sessionId":"2498290313890612314","position":{"line":3,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 422
 
-{"jsonrpc":"2.0","id":24,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":3,"character":10}},"sessionId":"2498290313890612314","position":{"line":3,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 380
+{"jsonrpc":"2.0","id":24,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":3,"character":10}},"sessionId":"2498290313890612314","position":{"line":3,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 380
 
-{"jsonrpc":"2.0","id":25,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":3,"character":10},"sessionId":"2498290313890612314","position":{"line":3,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 323
+{"jsonrpc":"2.0","id":25,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":3,"character":10},"sessionId":"2498290313890612314","position":{"line":3,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 323
 
-{"jsonrpc":"2.0","id":26,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":3,"end":4}},"sessionId":"2498290313890612314","position":{"line":3,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 289
+{"jsonrpc":"2.0","id":26,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":3,"end":4}},"sessionId":"2498290313890612314","position":{"line":3,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 289
 
-{"jsonrpc":"2.0","id":27,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":3,"character":10},"end":{"line":3,"character":10}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 419
+{"jsonrpc":"2.0","id":27,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":3,"character":10},"end":{"line":3,"character":10}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 419
 
-{"jsonrpc":"2.0","id":28,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":4,"character":28}},"sessionId":"2498290313890612314","position":{"line":4,"character":28},"textDocument":{"uri":"Example.lean"}}}Content-Length: 422
+{"jsonrpc":"2.0","id":28,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":4,"character":28}},"sessionId":"2498290313890612314","position":{"line":4,"character":28},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 422
 
-{"jsonrpc":"2.0","id":29,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":4,"character":28}},"sessionId":"2498290313890612314","position":{"line":4,"character":28},"textDocument":{"uri":"Example.lean"}}}Content-Length: 380
+{"jsonrpc":"2.0","id":29,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":4,"character":28}},"sessionId":"2498290313890612314","position":{"line":4,"character":28},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 380
 
-{"jsonrpc":"2.0","id":30,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":4,"character":28},"sessionId":"2498290313890612314","position":{"line":4,"character":28},"textDocument":{"uri":"Example.lean"}}}Content-Length: 323
+{"jsonrpc":"2.0","id":30,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":4,"character":28},"sessionId":"2498290313890612314","position":{"line":4,"character":28},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 323
 
-{"jsonrpc":"2.0","id":31,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":4,"end":5}},"sessionId":"2498290313890612314","position":{"line":4,"character":28},"textDocument":{"uri":"Example.lean"}}}Content-Length: 289
+{"jsonrpc":"2.0","id":31,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":4,"end":5}},"sessionId":"2498290313890612314","position":{"line":4,"character":28},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 289
 
-{"jsonrpc":"2.0","id":32,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":4,"character":28},"end":{"line":4,"character":28}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 212
+{"jsonrpc":"2.0","id":32,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":4,"character":28},"end":{"line":4,"character":28}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 212
 
-{"jsonrpc":"2.0","id":33,"method":"textDocument/documentHighlight","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":5,"character":11}}}Content-Length: 419
+{"jsonrpc":"2.0","id":33,"method":"textDocument/documentHighlight","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":5,"character":11}}}Content-Length: 419
 
-{"jsonrpc":"2.0","id":34,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":5,"character":11}},"sessionId":"2498290313890612314","position":{"line":5,"character":11},"textDocument":{"uri":"Example.lean"}}}Content-Length: 422
+{"jsonrpc":"2.0","id":34,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":5,"character":11}},"sessionId":"2498290313890612314","position":{"line":5,"character":11},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 422
 
-{"jsonrpc":"2.0","id":35,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":5,"character":11}},"sessionId":"2498290313890612314","position":{"line":5,"character":11},"textDocument":{"uri":"Example.lean"}}}Content-Length: 380
+{"jsonrpc":"2.0","id":35,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":5,"character":11}},"sessionId":"2498290313890612314","position":{"line":5,"character":11},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 380
 
-{"jsonrpc":"2.0","id":36,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":5,"character":11},"sessionId":"2498290313890612314","position":{"line":5,"character":11},"textDocument":{"uri":"Example.lean"}}}Content-Length: 323
+{"jsonrpc":"2.0","id":36,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":5,"character":11},"sessionId":"2498290313890612314","position":{"line":5,"character":11},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 323
 
-{"jsonrpc":"2.0","id":37,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":5,"end":6}},"sessionId":"2498290313890612314","position":{"line":5,"character":11},"textDocument":{"uri":"Example.lean"}}}Content-Length: 289
+{"jsonrpc":"2.0","id":37,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":5,"end":6}},"sessionId":"2498290313890612314","position":{"line":5,"character":11},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 289
 
-{"jsonrpc":"2.0","id":38,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":5,"character":11},"end":{"line":5,"character":11}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 417
+{"jsonrpc":"2.0","id":38,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":5,"character":11},"end":{"line":5,"character":11}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 417
 
-{"jsonrpc":"2.0","id":39,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":7,"character":0}},"sessionId":"2498290313890612314","position":{"line":7,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":39,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":7,"character":0}},"sessionId":"2498290313890612314","position":{"line":7,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":40,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":7,"character":0}},"sessionId":"2498290313890612314","position":{"line":7,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 378
+{"jsonrpc":"2.0","id":40,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":7,"character":0}},"sessionId":"2498290313890612314","position":{"line":7,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 378
 
-{"jsonrpc":"2.0","id":41,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":7,"character":0},"sessionId":"2498290313890612314","position":{"line":7,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 322
+{"jsonrpc":"2.0","id":41,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":7,"character":0},"sessionId":"2498290313890612314","position":{"line":7,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 322
 
-{"jsonrpc":"2.0","id":42,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":7,"end":8}},"sessionId":"2498290313890612314","position":{"line":7,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 212
+{"jsonrpc":"2.0","id":42,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":7,"end":8}},"sessionId":"2498290313890612314","position":{"line":7,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 212
 
-{"jsonrpc":"2.0","id":43,"method":"textDocument/documentHighlight","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":10}}}Content-Length: 419
+{"jsonrpc":"2.0","id":43,"method":"textDocument/documentHighlight","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":10}}}Content-Length: 419
 
-{"jsonrpc":"2.0","id":44,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 422
+{"jsonrpc":"2.0","id":44,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 422
 
-{"jsonrpc":"2.0","id":45,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 380
+{"jsonrpc":"2.0","id":45,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 380
 
-{"jsonrpc":"2.0","id":46,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":10},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 323
+{"jsonrpc":"2.0","id":46,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":10},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 323
 
-{"jsonrpc":"2.0","id":47,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 417
+{"jsonrpc":"2.0","id":47,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 417
 
-{"jsonrpc":"2.0","id":48,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":8}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":48,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":8}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":49,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":8}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"Example.lean"}}}Content-Length: 378
+{"jsonrpc":"2.0","id":49,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":8}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 378
 
-{"jsonrpc":"2.0","id":50,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":8},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"Example.lean"}}}Content-Length: 322
+{"jsonrpc":"2.0","id":50,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":8},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 322
 
-{"jsonrpc":"2.0","id":51,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"Example.lean"}}}Content-Length: 417
+{"jsonrpc":"2.0","id":51,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 417
 
-{"jsonrpc":"2.0","id":52,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":0}},"sessionId":"2498290313890612314","position":{"line":6,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":52,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":0}},"sessionId":"2498290313890612314","position":{"line":6,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":53,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":0}},"sessionId":"2498290313890612314","position":{"line":6,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 378
+{"jsonrpc":"2.0","id":53,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":0}},"sessionId":"2498290313890612314","position":{"line":6,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 378
 
-{"jsonrpc":"2.0","id":54,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":0},"sessionId":"2498290313890612314","position":{"line":6,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 322
+{"jsonrpc":"2.0","id":54,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":0},"sessionId":"2498290313890612314","position":{"line":6,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 322
 
-{"jsonrpc":"2.0","id":55,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":0},"textDocument":{"uri":"Example.lean"}}}Content-Length: 287
+{"jsonrpc":"2.0","id":55,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":0},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 287
 
-{"jsonrpc":"2.0","id":56,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":6,"character":0},"end":{"line":7,"character":0}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 174
+{"jsonrpc":"2.0","id":56,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":6,"character":0},"end":{"line":7,"character":0}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 174
 
-{"jsonrpc":"2.0","method":"$/lean/rpc/keepAlive","params":{"uri":"Example.lean","sessionId":"2498290313890612314"}}Content-Length: 293
+{"jsonrpc":"2.0","method":"$/lean/rpc/keepAlive","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","sessionId":"2498290313890612314"}}Content-Length: 293
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":2},"contentChanges":[{"range":{"start":{"line":6,"character":0},"end":{"line":7,"character":0}},"rangeLength":11,"text":""}]}}Content-Length: 241
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":2},"contentChanges":[{"range":{"start":{"line":6,"character":0},"end":{"line":7,"character":0}},"rangeLength":11,"text":""}]}}Content-Length: 241
 
-{"jsonrpc":"2.0","id":57,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":0}}}}Content-Length: 170
+{"jsonrpc":"2.0","id":57,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":0}}}}Content-Length: 170
 
-{"jsonrpc":"2.0","id":58,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 177
+{"jsonrpc":"2.0","id":58,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 177
 
-{"jsonrpc":"2.0","id":59,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 172
+{"jsonrpc":"2.0","id":59,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 172
 
-{"jsonrpc":"2.0","id":60,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 172
+{"jsonrpc":"2.0","id":60,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 172
 
-{"jsonrpc":"2.0","id":61,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 38
+{"jsonrpc":"2.0","id":61,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 38
 
 {"jsonrpc":"2.0","id":1,"result":null}Content-Length: 241
 
-{"jsonrpc":"2.0","id":62,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":0}}}}Content-Length: 63
+{"jsonrpc":"2.0","id":62,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":0}}}}Content-Length: 63
 
 {"jsonrpc":"2.0","method":"$/cancelRequest","params":{"id":62}}Content-Length: 241
 
-{"jsonrpc":"2.0","id":63,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":0}}}}Content-Length: 294
+{"jsonrpc":"2.0","id":63,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":0}}}}Content-Length: 294
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":3},"contentChanges":[{"range":{"start":{"line":6,"character":0},"end":{"line":6,"character":0}},"rangeLength":0,"text":"  "}]}}Content-Length: 38
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":3},"contentChanges":[{"range":{"start":{"line":6,"character":0},"end":{"line":6,"character":0}},"rangeLength":0,"text":"  "}]}}Content-Length: 38
 
 {"jsonrpc":"2.0","id":2,"result":null}Content-Length: 241
 
-{"jsonrpc":"2.0","id":64,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":2}}}}Content-Length: 417
+{"jsonrpc":"2.0","id":64,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":2}}}}Content-Length: 417
 
-{"jsonrpc":"2.0","id":65,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":2}},"sessionId":"2498290313890612314","position":{"line":6,"character":2},"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":65,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":2}},"sessionId":"2498290313890612314","position":{"line":6,"character":2},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":66,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":2}},"sessionId":"2498290313890612314","position":{"line":6,"character":2},"textDocument":{"uri":"Example.lean"}}}Content-Length: 378
+{"jsonrpc":"2.0","id":66,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":2}},"sessionId":"2498290313890612314","position":{"line":6,"character":2},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 378
 
-{"jsonrpc":"2.0","id":67,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":2},"sessionId":"2498290313890612314","position":{"line":6,"character":2},"textDocument":{"uri":"Example.lean"}}}Content-Length: 322
+{"jsonrpc":"2.0","id":67,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":2},"sessionId":"2498290313890612314","position":{"line":6,"character":2},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 322
 
-{"jsonrpc":"2.0","id":68,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":2},"textDocument":{"uri":"Example.lean"}}}Content-Length: 170
+{"jsonrpc":"2.0","id":68,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":2},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 170
 
-{"jsonrpc":"2.0","id":69,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 177
+{"jsonrpc":"2.0","id":69,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 177
 
-{"jsonrpc":"2.0","id":70,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 172
+{"jsonrpc":"2.0","id":70,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 172
 
-{"jsonrpc":"2.0","id":71,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 172
+{"jsonrpc":"2.0","id":71,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 172
 
-{"jsonrpc":"2.0","id":72,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 38
+{"jsonrpc":"2.0","id":72,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 38
 
 {"jsonrpc":"2.0","id":3,"result":null}Content-Length: 241
 
-{"jsonrpc":"2.0","id":73,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":2}}}}Content-Length: 63
+{"jsonrpc":"2.0","id":73,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":2}}}}Content-Length: 63
 
 {"jsonrpc":"2.0","method":"$/cancelRequest","params":{"id":73}}Content-Length: 241
 
-{"jsonrpc":"2.0","id":74,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":2}}}}Content-Length: 293
+{"jsonrpc":"2.0","id":74,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":2}}}}Content-Length: 293
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":4},"contentChanges":[{"range":{"start":{"line":6,"character":2},"end":{"line":6,"character":2}},"rangeLength":0,"text":"e"}]}}Content-Length: 241
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":4},"contentChanges":[{"range":{"start":{"line":6,"character":2},"end":{"line":6,"character":2}},"rangeLength":0,"text":"e"}]}}Content-Length: 241
 
-{"jsonrpc":"2.0","id":75,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":3}}}}Content-Length: 293
+{"jsonrpc":"2.0","id":75,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":3}}}}Content-Length: 293
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":5},"contentChanges":[{"range":{"start":{"line":6,"character":3},"end":{"line":6,"character":3}},"rangeLength":0,"text":"x"}]}}Content-Length: 241
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":5},"contentChanges":[{"range":{"start":{"line":6,"character":3},"end":{"line":6,"character":3}},"rangeLength":0,"text":"x"}]}}Content-Length: 241
 
-{"jsonrpc":"2.0","id":76,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":4}}}}Content-Length: 417
+{"jsonrpc":"2.0","id":76,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":4}}}}Content-Length: 417
 
-{"jsonrpc":"2.0","id":77,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":4}},"sessionId":"2498290313890612314","position":{"line":6,"character":4},"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":77,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":4}},"sessionId":"2498290313890612314","position":{"line":6,"character":4},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":78,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":4}},"sessionId":"2498290313890612314","position":{"line":6,"character":4},"textDocument":{"uri":"Example.lean"}}}Content-Length: 378
+{"jsonrpc":"2.0","id":78,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":4}},"sessionId":"2498290313890612314","position":{"line":6,"character":4},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 378
 
-{"jsonrpc":"2.0","id":79,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":4},"sessionId":"2498290313890612314","position":{"line":6,"character":4},"textDocument":{"uri":"Example.lean"}}}Content-Length: 322
+{"jsonrpc":"2.0","id":79,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":4},"sessionId":"2498290313890612314","position":{"line":6,"character":4},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 322
 
-{"jsonrpc":"2.0","id":80,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":4},"textDocument":{"uri":"Example.lean"}}}Content-Length: 38
+{"jsonrpc":"2.0","id":80,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":4},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 38
 
 {"jsonrpc":"2.0","id":4,"result":null}Content-Length: 241
 
-{"jsonrpc":"2.0","id":81,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":4}}}}Content-Length: 170
+{"jsonrpc":"2.0","id":81,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":4}}}}Content-Length: 170
 
-{"jsonrpc":"2.0","id":82,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 232
+{"jsonrpc":"2.0","id":82,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 232
 
-{"jsonrpc":"2.0","id":83,"method":"textDocument/completion","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":4},"context":{"triggerKind":1}}}Content-Length: 293
+{"jsonrpc":"2.0","id":83,"method":"textDocument/completion","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":4},"context":{"triggerKind":1}}}Content-Length: 293
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":6},"contentChanges":[{"range":{"start":{"line":6,"character":4},"end":{"line":6,"character":4}},"rangeLength":0,"text":"a"}]}}Content-Length: 63
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":6},"contentChanges":[{"range":{"start":{"line":6,"character":4},"end":{"line":6,"character":4}},"rangeLength":0,"text":"a"}]}}Content-Length: 63
 
 {"jsonrpc":"2.0","method":"$/cancelRequest","params":{"id":81}}Content-Length: 241
 
-{"jsonrpc":"2.0","id":84,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":5}}}}Content-Length: 177
+{"jsonrpc":"2.0","id":84,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":5}}}}Content-Length: 177
 
-{"jsonrpc":"2.0","id":85,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 417
+{"jsonrpc":"2.0","id":85,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 417
 
-{"jsonrpc":"2.0","id":86,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":5}},"sessionId":"2498290313890612314","position":{"line":6,"character":5},"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":86,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":5}},"sessionId":"2498290313890612314","position":{"line":6,"character":5},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":87,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":5}},"sessionId":"2498290313890612314","position":{"line":6,"character":5},"textDocument":{"uri":"Example.lean"}}}Content-Length: 378
+{"jsonrpc":"2.0","id":87,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":5}},"sessionId":"2498290313890612314","position":{"line":6,"character":5},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 378
 
-{"jsonrpc":"2.0","id":88,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":5},"sessionId":"2498290313890612314","position":{"line":6,"character":5},"textDocument":{"uri":"Example.lean"}}}Content-Length: 322
+{"jsonrpc":"2.0","id":88,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":5},"sessionId":"2498290313890612314","position":{"line":6,"character":5},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 322
 
-{"jsonrpc":"2.0","id":89,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":5},"textDocument":{"uri":"Example.lean"}}}Content-Length: 261
+{"jsonrpc":"2.0","id":89,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":5},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 261
 
 {"jsonrpc":"2.0","id":90,"method":"completionItem/resolve","params":{"label":"exact","documentation":{"kind":"markdown","value":"`exact e` closes the main goal if its target type matches that of `e`.\n"},"insertTextFormat":1,"kind":14,"data":["Example",6,4,0]}}Content-Length: 293
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":7},"contentChanges":[{"range":{"start":{"line":6,"character":5},"end":{"line":6,"character":5}},"rangeLength":0,"text":"c"}]}}Content-Length: 241
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":7},"contentChanges":[{"range":{"start":{"line":6,"character":5},"end":{"line":6,"character":5}},"rangeLength":0,"text":"c"}]}}Content-Length: 241
 
-{"jsonrpc":"2.0","id":91,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":6}}}}Content-Length: 417
+{"jsonrpc":"2.0","id":91,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":6}}}}Content-Length: 417
 
-{"jsonrpc":"2.0","id":92,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":6}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":92,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":6}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":93,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":6}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"Example.lean"}}}Content-Length: 378
+{"jsonrpc":"2.0","id":93,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":6}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 378
 
-{"jsonrpc":"2.0","id":94,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":6},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"Example.lean"}}}Content-Length: 322
+{"jsonrpc":"2.0","id":94,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":6},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 322
 
-{"jsonrpc":"2.0","id":95,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"Example.lean"}}}Content-Length: 170
+{"jsonrpc":"2.0","id":95,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 170
 
-{"jsonrpc":"2.0","id":96,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 293
+{"jsonrpc":"2.0","id":96,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 293
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":8},"contentChanges":[{"range":{"start":{"line":6,"character":6},"end":{"line":6,"character":6}},"rangeLength":0,"text":"t"}]}}Content-Length: 417
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":8},"contentChanges":[{"range":{"start":{"line":6,"character":6},"end":{"line":6,"character":6}},"rangeLength":0,"text":"t"}]}}Content-Length: 417
 
-{"jsonrpc":"2.0","id":97,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":6}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":97,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":6}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":98,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":6}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"Example.lean"}}}Content-Length: 378
+{"jsonrpc":"2.0","id":98,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":6}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 378
 
-{"jsonrpc":"2.0","id":99,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":6},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"Example.lean"}}}Content-Length: 323
+{"jsonrpc":"2.0","id":99,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":6},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 323
 
-{"jsonrpc":"2.0","id":100,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"Example.lean"}}}Content-Length: 38
+{"jsonrpc":"2.0","id":100,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":6},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 38
 
 {"jsonrpc":"2.0","id":5,"result":null}Content-Length: 242
 
-{"jsonrpc":"2.0","id":101,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":7}}}}Content-Length: 178
+{"jsonrpc":"2.0","id":101,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":7}}}}Content-Length: 178
 
-{"jsonrpc":"2.0","id":102,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 293
+{"jsonrpc":"2.0","id":102,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 293
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":9},"contentChanges":[{"range":{"start":{"line":6,"character":7},"end":{"line":6,"character":7}},"rangeLength":0,"text":" "}]}}Content-Length: 242
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":9},"contentChanges":[{"range":{"start":{"line":6,"character":7},"end":{"line":6,"character":7}},"rangeLength":0,"text":" "}]}}Content-Length: 242
 
-{"jsonrpc":"2.0","id":103,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":8}}}}Content-Length: 173
+{"jsonrpc":"2.0","id":103,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":8}}}}Content-Length: 173
 
-{"jsonrpc":"2.0","id":104,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 64
+{"jsonrpc":"2.0","id":104,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 64
 
 {"jsonrpc":"2.0","method":"$/cancelRequest","params":{"id":104}}Content-Length: 418
 
-{"jsonrpc":"2.0","id":105,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":8}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"Example.lean"}}}Content-Length: 421
+{"jsonrpc":"2.0","id":105,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":8}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 421
 
-{"jsonrpc":"2.0","id":106,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":8}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"Example.lean"}}}Content-Length: 379
+{"jsonrpc":"2.0","id":106,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":8}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 379
 
-{"jsonrpc":"2.0","id":107,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":8},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"Example.lean"}}}Content-Length: 323
+{"jsonrpc":"2.0","id":107,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":8},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 323
 
-{"jsonrpc":"2.0","id":108,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"Example.lean"}}}Content-Length: 279
+{"jsonrpc":"2.0","id":108,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 279
 
-{"jsonrpc":"2.0","id":109,"method":"textDocument/signatureHelp","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":8},"context":{"isRetrigger":false,"triggerCharacter":" ","triggerKind":2}}}Content-Length: 294
+{"jsonrpc":"2.0","id":109,"method":"textDocument/signatureHelp","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":8},"context":{"isRetrigger":false,"triggerCharacter":" ","triggerKind":2}}}Content-Length: 294
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":10},"contentChanges":[{"range":{"start":{"line":6,"character":8},"end":{"line":6,"character":8}},"rangeLength":0,"text":"h"}]}}Content-Length: 242
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":10},"contentChanges":[{"range":{"start":{"line":6,"character":8},"end":{"line":6,"character":8}},"rangeLength":0,"text":"h"}]}}Content-Length: 242
 
-{"jsonrpc":"2.0","id":110,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":9}}}}Content-Length: 418
+{"jsonrpc":"2.0","id":110,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":9}}}}Content-Length: 418
 
-{"jsonrpc":"2.0","id":111,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":9}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"Example.lean"}}}Content-Length: 421
+{"jsonrpc":"2.0","id":111,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":9}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 421
 
-{"jsonrpc":"2.0","id":112,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":9}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"Example.lean"}}}Content-Length: 379
+{"jsonrpc":"2.0","id":112,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":9}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 379
 
-{"jsonrpc":"2.0","id":113,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":9},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"Example.lean"}}}Content-Length: 323
+{"jsonrpc":"2.0","id":113,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":9},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 323
 
-{"jsonrpc":"2.0","id":114,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"Example.lean"}}}Content-Length: 178
+{"jsonrpc":"2.0","id":114,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 178
 
-{"jsonrpc":"2.0","id":115,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 171
+{"jsonrpc":"2.0","id":115,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 171
 
-{"jsonrpc":"2.0","id":116,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 233
+{"jsonrpc":"2.0","id":116,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 233
 
-{"jsonrpc":"2.0","id":117,"method":"textDocument/completion","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":9},"context":{"triggerKind":1}}}Content-Length: 418
+{"jsonrpc":"2.0","id":117,"method":"textDocument/completion","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":9},"context":{"triggerKind":1}}}Content-Length: 418
 
-{"jsonrpc":"2.0","id":118,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":9}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"Example.lean"}}}Content-Length: 421
+{"jsonrpc":"2.0","id":118,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":9}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 421
 
-{"jsonrpc":"2.0","id":119,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":9}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"Example.lean"}}}Content-Length: 379
+{"jsonrpc":"2.0","id":119,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":9}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 379
 
-{"jsonrpc":"2.0","id":120,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":9},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"Example.lean"}}}Content-Length: 323
+{"jsonrpc":"2.0","id":120,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":9},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 323
 
-{"jsonrpc":"2.0","id":121,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"Example.lean"}}}Content-Length: 422
+{"jsonrpc":"2.0","id":121,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":9},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 422
 
-{"jsonrpc":"2.0","id":122,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgetSource","params":{"pos":{"uri":"Example.lean","character":8,"line":6},"hash":"14043757810349425459"},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"Example.lean"}}}Content-Length: 38
+{"jsonrpc":"2.0","id":122,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgetSource","params":{"pos":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","character":8,"line":6},"hash":"14043757810349425459"},"sessionId":"2498290313890612314","position":{"line":6,"character":8},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 38
 
 {"jsonrpc":"2.0","id":6,"result":null}Content-Length: 242
 
-{"jsonrpc":"2.0","id":123,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":9}}}}Content-Length: 294
+{"jsonrpc":"2.0","id":123,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":9}}}}Content-Length: 294
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":11},"contentChanges":[{"range":{"start":{"line":6,"character":9},"end":{"line":6,"character":9}},"rangeLength":0,"text":"p"}]}}Content-Length: 64
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":11},"contentChanges":[{"range":{"start":{"line":6,"character":9},"end":{"line":6,"character":9}},"rangeLength":0,"text":"p"}]}}Content-Length: 64
 
 {"jsonrpc":"2.0","method":"$/cancelRequest","params":{"id":123}}Content-Length: 173
 
-{"jsonrpc":"2.0","id":124,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 151
+{"jsonrpc":"2.0","id":124,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 151
 
 {"jsonrpc":"2.0","id":125,"method":"completionItem/resolve","params":{"label":"hp","insertTextFormat":1,"kind":6,"data":["Example",6,9,0,"f_uniq.29"]}}Content-Length: 243
 
-{"jsonrpc":"2.0","id":126,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":10}}}}Content-Length: 420
+{"jsonrpc":"2.0","id":126,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":10}}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":127,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 423
+{"jsonrpc":"2.0","id":127,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 423
 
-{"jsonrpc":"2.0","id":128,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 381
+{"jsonrpc":"2.0","id":128,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 381
 
-{"jsonrpc":"2.0","id":129,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":10},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 324
+{"jsonrpc":"2.0","id":129,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":10},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 324
 
-{"jsonrpc":"2.0","id":130,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 171
+{"jsonrpc":"2.0","id":130,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 171
 
-{"jsonrpc":"2.0","id":131,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 243
+{"jsonrpc":"2.0","id":131,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 243
 
-{"jsonrpc":"2.0","id":132,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":10}}}}Content-Length: 420
+{"jsonrpc":"2.0","id":132,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":10}}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":133,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 423
+{"jsonrpc":"2.0","id":133,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 423
 
-{"jsonrpc":"2.0","id":134,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 381
+{"jsonrpc":"2.0","id":134,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 381
 
-{"jsonrpc":"2.0","id":135,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":10},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 324
+{"jsonrpc":"2.0","id":135,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":10},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 324
 
-{"jsonrpc":"2.0","id":136,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 178
+{"jsonrpc":"2.0","id":136,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 178
 
-{"jsonrpc":"2.0","id":137,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 173
+{"jsonrpc":"2.0","id":137,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 173
 
-{"jsonrpc":"2.0","id":138,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 173
+{"jsonrpc":"2.0","id":138,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 173
 
-{"jsonrpc":"2.0","id":139,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 290
+{"jsonrpc":"2.0","id":139,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 290
 
-{"jsonrpc":"2.0","id":140,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":6,"character":10},"end":{"line":6,"character":10}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 64
+{"jsonrpc":"2.0","id":140,"method":"textDocument/codeAction","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":6,"character":10},"end":{"line":6,"character":10}},"context":{"diagnostics":[],"triggerKind":2}}}Content-Length: 64
 
 {"jsonrpc":"2.0","method":"$/cancelRequest","params":{"id":132}}Content-Length: 243
 
-{"jsonrpc":"2.0","id":141,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":10}}}}Content-Length: 201
+{"jsonrpc":"2.0","id":141,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":6,"character":10}}}}Content-Length: 201
 
-{"jsonrpc":"2.0","id":142,"method":"textDocument/hover","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":2,"character":34}}}Content-Length: 206
+{"jsonrpc":"2.0","id":142,"method":"textDocument/hover","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":2,"character":34}}}Content-Length: 206
 
-{"jsonrpc":"2.0","id":143,"method":"textDocument/definition","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":2,"character":35}}}Content-Length: 297
+{"jsonrpc":"2.0","id":143,"method":"textDocument/definition","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":2,"character":35}}}Content-Length: 297
 
-{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"Example.lean","version":12},"contentChanges":[{"range":{"start":{"line":6,"character":10},"end":{"line":6,"character":10}},"rangeLength":0,"text":"\n"}]}}Content-Length: 328
+{"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","version":12},"contentChanges":[{"range":{"start":{"line":6,"character":10},"end":{"line":6,"character":10}},"rangeLength":0,"text":"\n"}]}}Content-Length: 328
 
-{"jsonrpc":"2.0","method":"textDocument/didSave","params":{"textDocument":{"uri":"Example.lean"},"text":"variable {p q r : Prop}\n\ntheorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by\n  intro hp\n  apply hqr  -- et pas hpq !\n  apply hpq\n  exact hp\n"}}Content-Length: 242
+{"jsonrpc":"2.0","method":"textDocument/didSave","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"text":"variable {p q r : Prop}\n\ntheorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by\n  intro hp\n  apply hqr  -- et pas hpq !\n  apply hpq\n  exact hp\n"}}Content-Length: 242
 
-{"jsonrpc":"2.0","id":144,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 171
+{"jsonrpc":"2.0","id":144,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 171
 
-{"jsonrpc":"2.0","id":145,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 420
+{"jsonrpc":"2.0","id":145,"method":"textDocument/foldingRange","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 420
 
-{"jsonrpc":"2.0","id":146,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 423
+{"jsonrpc":"2.0","id":146,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveGoals","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 423
 
-{"jsonrpc":"2.0","id":147,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 381
+{"jsonrpc":"2.0","id":147,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveTermGoal","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"position":{"line":6,"character":10}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 381
 
-{"jsonrpc":"2.0","id":148,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"Example.lean","line":6,"character":10},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 324
+{"jsonrpc":"2.0","id":148,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getWidgets","params":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","line":6,"character":10},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 324
 
-{"jsonrpc":"2.0","id":149,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"Example.lean"}}}Content-Length: 178
+{"jsonrpc":"2.0","id":149,"method":"$/lean/rpc/call","params":{"method":"Lean.Widget.getInteractiveDiagnostics","params":{"lineRange":{"start":6,"end":7}},"sessionId":"2498290313890612314","position":{"line":6,"character":10},"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 178
 
-{"jsonrpc":"2.0","id":150,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 173
+{"jsonrpc":"2.0","id":150,"method":"textDocument/semanticTokens/full","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 173
 
-{"jsonrpc":"2.0","id":151,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 173
+{"jsonrpc":"2.0","id":151,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 173
 
-{"jsonrpc":"2.0","id":152,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"Example.lean"}}}Content-Length: 174
+{"jsonrpc":"2.0","id":152,"method":"textDocument/documentSymbol","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}Content-Length: 174
 
-{"jsonrpc":"2.0","method":"workspace/didChangeWatchedFiles","params":{"changes":[{"uri":"Example.lean","type":2}]}}Content-Length: 38
+{"jsonrpc":"2.0","method":"workspace/didChangeWatchedFiles","params":{"changes":[{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean","type":2}]}}Content-Length: 38
 
 {"jsonrpc":"2.0","id":7,"result":null}Content-Length: 242
 
-{"jsonrpc":"2.0","id":153,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 64
+{"jsonrpc":"2.0","id":153,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 64
 
 {"jsonrpc":"2.0","method":"$/cancelRequest","params":{"id":153}}Content-Length: 242
 
-{"jsonrpc":"2.0","id":154,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 158
+{"jsonrpc":"2.0","id":154,"method":"textDocument/inlayHint","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"},"range":{"start":{"line":0,"character":0},"end":{"line":7,"character":0}}}}Content-Length: 158
 
-{"jsonrpc":"2.0","method":"textDocument/didClose","params":{"textDocument":{"uri":"Example.lean"}}}
+{"jsonrpc":"2.0","method":"textDocument/didClose","params":{"textDocument":{"uri":"file:///home/ameyer/Documents/Code/lean4/lean_log_cruncher/Example.lean"}}}
