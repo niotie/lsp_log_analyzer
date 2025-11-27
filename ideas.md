@@ -1,10 +1,5 @@
-À chaque frappe de touche / modification :
-- notification 'textDocument/didChange'
-- suivie de plusieurs request '$/lean/rpc/call :
-    - Lean.Widget.getInteractiveGoals
-    - Lean.Widget.getInteractiveTermGoal
-    - Lean.Widget.getWidgets
-    - Lean.Widget.getInteractiveDiagnostics
+# TODO
 
-Regarder "Received notification 'textDocument/publishDiagnostics'"
-- liste des messages
+- Traiter et enregistrer les diagnostics
+- Vider la liste de changements "pending" et enregistrer un snapshot complet si un diagnostic "intéressant" (= différent du précédent) est apparu
+- Récupérer une info sur la commande dans laquelle a été effectué chaque changement (nom de théorème ?) pour essayer de présenter les zones d'édition sous la forme "ligne x du théorème y"
