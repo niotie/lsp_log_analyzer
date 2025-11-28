@@ -247,7 +247,9 @@ def onDidOpen (time : ZonedDateTime) (params? : Option Structured) : TrackerM Un
   | .ok params =>
     let doc := params.textDocument
     let fs ← ensureFile doc.uri
-    let fs := { fs with snapshots := fs.snapshots.push ⟨time, doc⟩ }
+    let fs := { fs with
+      snapshots := fs.snapshots.push ⟨time, doc⟩
+      changes := #[] }
     modifyFileState doc.uri fs
 
 def onDidChange (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
