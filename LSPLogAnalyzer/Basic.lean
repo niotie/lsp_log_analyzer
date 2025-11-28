@@ -56,13 +56,11 @@ local instance : ToString TextDocumentContentChangeEvent where
 instance : ToString ChangeEvent where
   toString ev :=
     let ranges := ev.changes.map toString
-    let sranges := ranges.toList.map toString
     let vs :=
-      if h : ev.version?.isSome then
-        let v := ev.version?.get h
-        s!" - version {v}"
-      else ""
-    s!"[{ev.time}{vs}] " ++ ", ".intercalate sranges
+      match ev.version? with
+      | some v => s!" - version {v}"
+      | none => ""
+    s!"[{ev.time}{vs}] " ++ ", ".intercalate ranges.toList
 
 
 /-- File snapshot. -/
@@ -108,9 +106,9 @@ deriving Inhabited
 
 instance : ToString Tracker where
   toString tracker :=
-    let aux | (uri, fs) => s!"State for {uri}:\n\n" ++ toString fs
-    let fss := String.intercalate "\n\n" $ tracker.files.toList.map aux
-    let errors := String.intercalate "\n" $ tracker.errors.toList.map toString
+    let fss := "\n\n".intercalate $ tracker.files.toList.map
+      fun (uri, fs) => s!"State for {uri}:\n\n{fs}"
+    let errors := "\n".intercalate $ tracker.errors.toList.map toString
     fss ++ "\n\nErrors:\n" ++ errors
 
 /-- Tracker monad. -/
@@ -121,13 +119,12 @@ end Structures
 
 section Utils
 
-def fileStream (filename : System.FilePath) : IO IO.FS.Stream := do
-  let handle ← IO.FS.Handle.mk filename IO.FS.Mode.read
-  pure (IO.FS.Stream.ofHandle handle)
+open IO.FS in
+def fileStream (filename : System.FilePath) : IO Stream := do
+  return .ofHandle (← Handle.mk filename Mode.read)
 
 def parseLogLine (line : String) : Except String LogEntry := do
-  let j ← parse line
-  Lean.fromJson? j
+  Lean.fromJson? (← parse line)
 
 private def ensureFile (uri : String) : TrackerM FileState := do
   let st ← get
@@ -149,9 +146,10 @@ def messageSummary : Message → String
 
 def logEntrySummary (e : LogEntry) : String := messageSummary e.msg
 
-partial def collectMessages (stream : IO.FS.Stream) (filter : Message → Bool) : IO (List Message) := do
+open IO FS in
+partial def collectMessages (stream : Stream) (filter : Message → Bool) : IO (List Message) := do
   try
-    let msg ← IO.FS.Stream.readLspMessage stream
+    let msg ← stream.readLspMessage
     let tail ← collectMessages stream filter
     if filter msg then
       pure (msg :: tail)
@@ -161,15 +159,15 @@ partial def collectMessages (stream : IO.FS.Stream) (filter : Message → Bool) 
     if e.toString.endsWith "Stream was closed" then
       pure []
     else
-      let stderr ← IO.getStderr
+      let stderr ← getStderr
       stderr.putStrLn s!"{e}"
       collectMessages stream filter
 
 partial def collectLogEntries (stream : IO.FS.Stream) (filter : Message → Bool) : IO (List LogEntry) := do
-  match (← stream.getLine) with
+  match ← stream.getLine with
   | "" => pure []
   | line =>
-      let j ← IO.ofExcept $ parse line
+      let j ← .ofExcept $ parse line
       let entry : Except String LogEntry := Lean.fromJson? j
       match entry with
       | .error e =>
@@ -241,8 +239,7 @@ section TrackerActions
 def onError (e : String)
   -- (entry : LogEntry)
   : TrackerM Unit := do
-  let st ← get
-  set { st with errors := st.errors.push ⟨e⟩ }
+  modify fun st => { st with errors := st.errors.push ⟨e⟩ }
 
 def onDidOpen (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
   match (fromJson? (toJson params?) : Except String LeanDidOpenTextDocumentParams) with
@@ -250,9 +247,7 @@ def onDidOpen (time : ZonedDateTime) (params? : Option Structured) : TrackerM Un
   | .ok params =>
     let doc := params.textDocument
     let fs ← ensureFile doc.uri
-    let fs := { fs with
-      snapshots := fs.snapshots.push ⟨time, doc⟩
-      changes := #[] }
+    let fs := { fs with snapshots := fs.snapshots.push ⟨time, doc⟩ }
     modifyFileState doc.uri fs
 
 def onDidChange (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
