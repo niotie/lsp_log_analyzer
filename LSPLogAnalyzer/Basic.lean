@@ -1,26 +1,26 @@
-import Lean.Data.JsonRpc
-import Lean.Data.Lsp
-import Lean.Data.RBMap
-import Lean.Server.Logging
-import Lean.Server.ProtocolOverview
+import Lean
 
 namespace LSPLogAnalyzer
 
-open Lean.Json Lean.ToJson Lean.FromJson Lean.JsonRpc Lean.Lsp
+open Lean.Json
+open Lean.ToJson
+open Lean.FromJson
+open Lean.JsonRpc
+open Lean.Lsp
 open Std.Time
+open Lean.Server.Test.Runner.Client
 
 abbrev Uri := String
 
-local instance : Lean.ToJson ZonedDateTime where
+section Structures
+
+instance : Lean.ToJson ZonedDateTime where
   toJson dt := dt.toISO8601String
 
-local instance : Lean.FromJson ZonedDateTime where
+instance : Lean.FromJson ZonedDateTime where
   fromJson?
     | .str s => ZonedDateTime.fromISO8601String s
     | _ => throw "Expected string when converting JSON to ZonedDateTime"
-
-
-section Structures
 
 /-- LSP log entry (new format). -/
 structure LogEntry where
@@ -67,6 +67,8 @@ instance : ToString ChangeEvent where
 structure Snapshot where
   time : ZonedDateTime
   doc : TextDocumentItem
+  goals : Array InteractiveGoal
+  diags : Array Diagnostic
 
 instance : ToString Snapshot where
   toString snap :=
@@ -180,6 +182,14 @@ partial def collectLogEntries (stream : IO.FS.Stream) (filter : Message → Bool
             tail
       where tail := collectLogEntries stream filter
 
+def collectLogEntries' (path : System.FilePath) : IO (Array LogEntry) := do
+  let log ← IO.FS.readFile path
+  let log := log.trimRight
+  let entries := log.splitOn "\n" |>.toArray
+  let entries := entries.map parse
+  let entries ← IO.ofExcept <| entries.mapM id
+  IO.ofExcept <| entries.mapM fromJson?
+
 def updateSnapshot (snap : Snapshot) : Option Snapshot :=
   snap  -- FIXME
 
@@ -187,52 +197,6 @@ def modifyFileState (uri : Uri) (fs : FileState) : TrackerM Unit := do
   modify fun s => { s with files := s.files.insert uri fs }
 
 end Utils
-
-
-section Unused
-
--- partial def processLines
---     (stream : IO.FS.Stream)
---     (processor : String → Except String α)
---     : IO (List α) := do
---   match (← stream.getLine) with
---   | "" => pure []
---   | line =>
---       let head := processor line
---       let tail ← processLines stream processor
---       match head with
---       | .error e =>
---           (← IO.getStderr).putStrLn e
---           return tail
---       | .ok entry =>
---           return entry :: tail
-
--- def getUri (msg : Message) : Option String :=
---     match msg with
---     | .request _ _ (some params)
---     | .notification _ (some params) =>
---         match do
---           let params := params.toJson
---           let textDoc ← params.getObjVal? "textDocument"
---           let uri ← textDoc.getObjVal? "uri"
---           uri.getStr?
---         with
---         | .ok s => some s
---         | _ => none
---     | _ => none
-
--- def exampleMessageFilter (msg : Message) : Bool :=
---   match msg with
---   | .request _ "initialize" .. => true
---   | .notification "textDocument/didOpen" ..
---   | .notification "textDocument/didChange" .. =>
---     match getUri msg with
---     | none => false
---     | some s => s.endsWith "Example.lean"
---   | _ => false
-
-end Unused
-
 
 section TrackerActions
 
@@ -247,7 +211,9 @@ def onDidOpen (time : ZonedDateTime) (params? : Option Structured) : TrackerM Un
   | .ok params =>
     let doc := params.textDocument
     let fs ← ensureFile doc.uri
-    let fs := { fs with snapshots := fs.snapshots.push ⟨time, doc⟩ }
+    let fs := { fs with
+      snapshots := fs.snapshots.push ⟨time, doc, #[], #[]⟩
+      changes := #[] }
     modifyFileState doc.uri fs
 
 def onDidChange (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
@@ -292,3 +258,5 @@ def processLogEntry (entry : LogEntry) : TrackerM Unit := do
     | _ => onError s!"Ignored log entry (server to client): {messageSummary entry.msg}"
 
 end Processing
+
+end LSPLogAnalyzer

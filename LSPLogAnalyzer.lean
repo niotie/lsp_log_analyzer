@@ -1,2 +1,3 @@
 import LSPLogAnalyzer.Basic
 import LSPLogAnalyzer.FileState
+import LSPLogAnalyzer.PrettyGoals
