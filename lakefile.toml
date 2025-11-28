@@ -2,6 +2,9 @@ name = "lsp_log_analyzer"
 version = "0.1.0"
 defaultTargets = ["lsp_log_analyzer"]
 
+[leanOptions]
+experimental.module = true
+
 [[lean_lib]]
 name = "LSPLogAnalyzer"
 
