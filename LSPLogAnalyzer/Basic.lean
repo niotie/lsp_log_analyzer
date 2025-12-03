@@ -33,8 +33,10 @@ structure LogEntry where
 instance : ToString LogEntry where
   toString le := pretty $ toJson le
 
-instance : ToString LogEntry where
-  toString le := pretty $ toJson le
+instance : ToString MessageDirection where
+  toString
+  | .serverToClient => "server→client"
+  | .clientToServer => "client→server"
 
 instance : Coe LogEntry Message := ⟨LogEntry.msg⟩
 
@@ -67,8 +69,8 @@ instance : ToString ChangeEvent where
 structure Snapshot where
   time : ZonedDateTime
   doc : TextDocumentItem
-  goals : Array InteractiveGoal
-  diags : Array Diagnostic
+  goals : Array InteractiveGoal  -- not used yet
+  diags : Array Diagnostic       -- not used yet
 
 instance : ToString Snapshot where
   toString snap :=
@@ -79,17 +81,20 @@ instance : ToString Snapshot where
 /-- Per-file replay state. -/
 structure FileState where
   snapshots : Array Snapshot := #[]
-  currentSnap : Option Snapshot := none
   changes : Array ChangeEvent := #[]
-  diagnostics : Array Diagnostic := #[]
+  currentSnap : Option Snapshot := none   -- not used yet
+  currentDiags : Array Diagnostic := #[]  -- not used yet
+  requests : Std.TreeMap RequestID Lean.Name := {}
 deriving Inhabited
 
 instance : ToString FileState where
   toString fs :=
     let ssnaps := String.intercalate "\n" $ fs.snapshots.toList.map toString
     let schanges := String.intercalate "\n" $ fs.changes.toList.map toString
-    "Recorded snapshots:\n" ++ ssnaps
-    ++ "\n\nPending changes:\n" ++ schanges
+    let requests := "\n".intercalate $ fs.requests.toList.map toString
+    s!"Recorded snapshots:\n{ssnaps}\n\n\
+       Pending changes:\n{schanges}\n\n\
+       Pending requests:\n{requests}"
 
 /-- Log entry tracking error. -/
 structure TrackingError where
@@ -104,6 +109,7 @@ instance : ToString TrackingError where
 structure Tracker where
   files : Std.TreeMap Uri FileState Ord.compare := {}
   errors : Array TrackingError := #[]
+  line : Nat := 1
 deriving Inhabited
 
 instance : ToString Tracker where
@@ -205,28 +211,61 @@ def onError (e : String)
   : TrackerM Unit := do
   modify fun st => { st with errors := st.errors.push ⟨e⟩ }
 
-def onDidOpen (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
-  match (fromJson? (toJson params?) : Except String LeanDidOpenTextDocumentParams) with
-  | .error e => onError e; return
-  | .ok params =>
-    let doc := params.textDocument
-    let fs ← ensureFile doc.uri
-    let fs := { fs with
-      snapshots := fs.snapshots.push ⟨time, doc, #[], #[]⟩
-      changes := #[] }
-    modifyFileState doc.uri fs
+-- def onDidOpen (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
+--   match (fromJson? (toJson params?) : Except String LeanDidOpenTextDocumentParams) with
+--   | .error e => onError e; return
+--   | .ok params =>
+--     let doc := params.textDocument
+--     let fs ← ensureFile doc.uri
+--     let fs := { fs with
+--       snapshots := fs.snapshots.push ⟨time, doc, #[], #[]⟩
+--       changes := #[] }
+--     modifyFileState doc.uri fs
 
-def onDidChange (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
-  match (fromJson? (toJson params?) : Except String DidChangeTextDocumentParams) with
-  | .error e => onError e; return
-  | .ok params =>
-    let doc := params.textDocument
-    let changes := params.contentChanges
-    let v? := doc.version?
-    let fs ← ensureFile doc.uri
-    let fs := { fs with
-      changes := fs.changes.push ⟨time, v?, changes⟩}
-    modifyFileState doc.uri fs
+def onDidOpen' (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM Unit := do
+  let .ok (params : LeanDidOpenTextDocumentParams) := fromJson? notif.param
+    | onError "Unable to parse didOpen parameters {entry.param}"
+  let doc := params.textDocument
+  let fs ← ensureFile doc.uri
+  let fs := { fs with
+    snapshots := fs.snapshots.push ⟨time, doc, #[], #[]⟩
+    changes := #[] }
+  modifyFileState doc.uri fs
+
+-- def onDidChange (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
+--   match (fromJson? (toJson params?) : Except String DidChangeTextDocumentParams) with
+--   | .error e => onError e; return
+--   | .ok params =>
+--     let doc := params.textDocument
+--     let changes := params.contentChanges
+--     let v? := doc.version?
+--     let fs ← ensureFile doc.uri
+--     let fs := { fs with
+--       changes := fs.changes.push ⟨time, v?, changes⟩}
+--     modifyFileState doc.uri fs
+
+def onDidChange' (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM Unit := do
+  let .ok (params : DidChangeTextDocumentParams) := fromJson? notif.param
+    | onError "Unable to parse didChange parameters {entry.param}"
+  let doc := params.textDocument
+  let changes := params.contentChanges
+  let fs ← ensureFile doc.uri
+  let fs := { fs with
+    changes := fs.changes.push ⟨time, doc.version?, changes⟩}
+  modifyFileState doc.uri fs
+
+def onRpcRequest (request : Request Lean.Json) : TrackerM Unit := do
+  -- TODO : filter out uninteresting requests?
+  let .ok (params : RpcCallParams) := fromJson? request.param
+    | onError "Unable to parse didChange parameters {entry.param}"
+  let doc := params.textDocument
+  let fs ← ensureFile doc.uri
+  let fs := { fs with
+    requests := fs.requests.insert request.id params.method }
+  modifyFileState doc.uri fs
+
+def onGetInteractiveGoalsResponse (response : Response Lean.Json) : TrackerM Unit := do
+  sorry
 
 end TrackerActions
 
@@ -239,23 +278,54 @@ section Processing
 --   | .ok params => return params
 --   | .error e => onError e; return none
 
-def processNotification (time : ZonedDateTime) (method : String) (params? : Option Structured) : TrackerM Unit := do
-  match method with
-  | "textDocument/didOpen" => onDidOpen time params?
-  | "textDocument/didChange" => onDidChange time params?
-  | _ => onError s!"Ignored log entry: notification {method}"
-  return
+-- def processNotification
+--     (time : ZonedDateTime)
+--     (_dir : MessageDirection)
+--     (method : String)
+--     (params? : Option Structured) : TrackerM Unit := do
+--   match method with
+--   | "textDocument/didOpen" => onDidOpen time params?
+--   | "textDocument/didChange" => onDidChange time params?
+--   | _ => onError s!"Ignored log entry: notification {method}"
+
+def processNotification'
+    (time : ZonedDateTime)
+    (dir : MessageDirection)
+    (notif : Notification Lean.Json) : TrackerM Unit := do
+  match dir, notif.method with
+  | .clientToServer, "textDocument/didOpen" => onDidOpen' time notif
+  | .clientToServer, "textDocument/didChange" => onDidChange' time notif
+  | _, _ => onError s!"Ignored log entry: notification {notif.method}"
+
+def processRequest
+    (dir : MessageDirection)
+    (request : Request Lean.Json) : TrackerM Unit := do
+  match dir, request.method with
+  | .clientToServer, "$/lean/rpc/call" => onRpcRequest request
+  | _, _ => onError s!"Ignored log entry: request {request.method}"
+
+def processResponse
+    (time : ZonedDateTime)
+    (dir : MessageDirection)
+    (response : Response Lean.Json) : TrackerM Unit := do
+  sorry
 
 def processLogEntry (entry : LogEntry) : TrackerM Unit := do
-  match entry.direction with
-  | .clientToServer =>
-    match entry.msg with
-    | .notification method params? => processNotification entry.time method params?
-    -- | .request id method params? => onError s!"Ignored log entry: {entry}"
-    | _ => onError s!"Ignored log entry (client to server): {messageSummary entry.msg}"
-  | .serverToClient =>
-    match entry.msg with
-    | _ => onError s!"Ignored log entry (server to client): {messageSummary entry.msg}"
+  match entry.kind with
+  | .notification .. =>
+      let .some notif := Notification.ofMessage? entry.msg
+        | onError "Unable to parse notification {entry.msg}"
+      processNotification' entry.time entry.direction notif
+  -- | .request id method params? => onError s!"Ignored log entry: {entry}"
+  | .request .. =>
+      let .some request := Request.ofMessage? entry.msg
+        | onError "Unable to parse request {entry.msg}"
+      processRequest entry.direction request
+  | .response .. =>
+      let .some resp := Response.ofMessage? entry.msg
+        | onError "Unable to parse response {entry.msg}"
+      processResponse entry.time entry.direction resp
+  | _ => onError s!"Ignored log entry ({entry.direction}): {messageSummary entry.msg}"
 
 end Processing
 
