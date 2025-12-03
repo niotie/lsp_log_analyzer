@@ -44,7 +44,7 @@ instance : Coe LogEntry Message := ⟨LogEntry.msg⟩
 /-- File change event. -/
 structure ChangeEvent where
   time : ZonedDateTime
-  version? : Option Nat
+  version : Nat
   changes : Array TextDocumentContentChangeEvent
 
 local instance : ToString Range where
@@ -58,11 +58,7 @@ local instance : ToString TextDocumentContentChangeEvent where
 instance : ToString ChangeEvent where
   toString ev :=
     let ranges := ev.changes.map toString
-    let vs :=
-      match ev.version? with
-      | some v => s!" - version {v}"
-      | none => ""
-    s!"[{ev.time}{vs}] " ++ ", ".intercalate ranges.toList
+    s!"[{ev.time} - version {ev.version}] " ++ ", ".intercalate ranges.toList
 
 
 /-- File snapshot. -/
@@ -72,10 +68,30 @@ structure Snapshot where
   goals : Array InteractiveGoal  -- not used yet
   diags : Array Diagnostic       -- not used yet
 
+instance : ToString DiagnosticSeverity where
+  toString
+  | .information => "info"
+  | .error => "error"
+  | .warning => "warning"
+  | .hint => "hint"
+
+instance : ToString Diagnostic where
+  toString diag :=
+    let s := match diag.severity? with
+    | some s => s!" ({s})"
+    | none => ""
+    s!"{diag.range}{s} {diag.message}"
+
 instance : ToString Snapshot where
   toString snap :=
     let v := snap.doc.version
-    s!"[{snap.time} - version {v}]\n{snap.doc.text}\n[end version {v}]"
+    let diags := match snap.diags with
+    | #[] => ""
+    | _ => "[diagnostics]\n" ++ (String.intercalate "\n" $ snap.diags.toList.map toString)
+    s!"[begin version {v} ({snap.time})]\n\
+      {snap.doc.text.trim}\n\
+      {diags}\n\
+      [end version {v}]"
 
 
 /-- Per-file replay state. -/
@@ -84,17 +100,16 @@ structure FileState where
   changes : Array ChangeEvent := #[]
   currentSnap : Option Snapshot := none   -- not used yet
   currentDiags : Array Diagnostic := #[]  -- not used yet
-  requests : Std.TreeMap RequestID Lean.Name := {}
 deriving Inhabited
 
 instance : ToString FileState where
   toString fs :=
-    let ssnaps := String.intercalate "\n" $ fs.snapshots.toList.map toString
-    let schanges := String.intercalate "\n" $ fs.changes.toList.map toString
-    let requests := "\n".intercalate $ fs.requests.toList.map toString
+    let ssnaps := String.intercalate "\n\n" $ fs.snapshots.toList.map toString
+    let schanges := match fs.changes with
+    | #[] => ""
+    | _ => "Pending changes:\n" ++ (String.intercalate "\n" $ fs.changes.toList.map toString)
     s!"Recorded snapshots:\n{ssnaps}\n\n\
-       Pending changes:\n{schanges}\n\n\
-       Pending requests:\n{requests}"
+       {schanges}"
 
 /-- Log entry tracking error. -/
 structure TrackingError where
@@ -110,6 +125,7 @@ structure Tracker where
   files : Std.TreeMap Uri FileState Ord.compare := {}
   errors : Array TrackingError := #[]
   line : Nat := 1
+  requests : Std.TreeMap RequestID (Request Lean.Json) := {}
 deriving Inhabited
 
 instance : ToString Tracker where
@@ -117,7 +133,16 @@ instance : ToString Tracker where
     let fss := "\n\n".intercalate $ tracker.files.toList.map
       fun (uri, fs) => s!"State for {uri}:\n\n{fs}"
     let errors := "\n".intercalate $ tracker.errors.toList.map toString
-    fss ++ "\n\nErrors:\n" ++ errors
+    let requests := "\n".intercalate $ tracker.requests.toList.map
+      fun (id, req) =>
+        let m := match req.method with
+        | "$/lean/rpc/call" =>
+            match fromJson? req.param with
+            | .ok (param : RpcCallParams) => s!"{req.method} ({param.method})"
+            | _ => req.method
+        | _ => req.method
+        s!"{id}:\t{m}"
+    s!"{fss}\n\nErrors:\n{errors}\n\nPending requests:\n{requests}"
 
 /-- Tracker monad. -/
 abbrev TrackerM := StateT Tracker IO
@@ -154,50 +179,16 @@ def messageSummary : Message → String
 
 def logEntrySummary (e : LogEntry) : String := messageSummary e.msg
 
-open IO FS in
-partial def collectMessages (stream : Stream) (filter : Message → Bool) : IO (List Message) := do
-  try
-    let msg ← stream.readLspMessage
-    let tail ← collectMessages stream filter
-    if filter msg then
-      pure (msg :: tail)
-    else
-      pure tail
-  catch e =>
-    if e.toString.endsWith "Stream was closed" then
-      pure []
-    else
-      let stderr ← getStderr
-      stderr.putStrLn s!"{e}"
-      collectMessages stream filter
+def getLine : TrackerM Nat := do
+  return (← get).line
 
-partial def collectLogEntries (stream : IO.FS.Stream) (filter : Message → Bool) : IO (List LogEntry) := do
-  match ← stream.getLine with
-  | "" => pure []
-  | line =>
-      let j ← .ofExcept $ parse line
-      let entry : Except String LogEntry := Lean.fromJson? j
-      match entry with
-      | .error e =>
-          (← IO.getStderr).putStrLn e
-          tail
-      | .ok entry =>
-          if filter entry then
-            return entry :: (← tail)
-          else
-            tail
-      where tail := collectLogEntries stream filter
-
-def collectLogEntries' (path : System.FilePath) : IO (Array LogEntry) := do
+def collectLogEntries (path : System.FilePath) : IO (Array LogEntry) := do
   let log ← IO.FS.readFile path
   let log := log.trimRight
   let entries := log.splitOn "\n" |>.toArray
   let entries := entries.map parse
   let entries ← IO.ofExcept <| entries.mapM id
   IO.ofExcept <| entries.mapM fromJson?
-
-def updateSnapshot (snap : Snapshot) : Option Snapshot :=
-  snap  -- FIXME
 
 def modifyFileState (uri : Uri) (fs : FileState) : TrackerM Unit := do
   modify fun s => { s with files := s.files.insert uri fs }
@@ -211,18 +202,7 @@ def onError (e : String)
   : TrackerM Unit := do
   modify fun st => { st with errors := st.errors.push ⟨e⟩ }
 
--- def onDidOpen (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
---   match (fromJson? (toJson params?) : Except String LeanDidOpenTextDocumentParams) with
---   | .error e => onError e; return
---   | .ok params =>
---     let doc := params.textDocument
---     let fs ← ensureFile doc.uri
---     let fs := { fs with
---       snapshots := fs.snapshots.push ⟨time, doc, #[], #[]⟩
---       changes := #[] }
---     modifyFileState doc.uri fs
-
-def onDidOpen' (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM Unit := do
+def onDidOpen (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM Unit := do
   let .ok (params : LeanDidOpenTextDocumentParams) := fromJson? notif.param
     | onError "Unable to parse didOpen parameters {entry.param}"
   let doc := params.textDocument
@@ -232,100 +212,104 @@ def onDidOpen' (time : ZonedDateTime) (notif : Notification Lean.Json) : Tracker
     changes := #[] }
   modifyFileState doc.uri fs
 
--- def onDidChange (time : ZonedDateTime) (params? : Option Structured) : TrackerM Unit := do
---   match (fromJson? (toJson params?) : Except String DidChangeTextDocumentParams) with
---   | .error e => onError e; return
---   | .ok params =>
---     let doc := params.textDocument
---     let changes := params.contentChanges
---     let v? := doc.version?
---     let fs ← ensureFile doc.uri
---     let fs := { fs with
---       changes := fs.changes.push ⟨time, v?, changes⟩}
---     modifyFileState doc.uri fs
-
-def onDidChange' (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM Unit := do
+def onDidChange (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM Unit := do
   let .ok (params : DidChangeTextDocumentParams) := fromJson? notif.param
     | onError "Unable to parse didChange parameters {entry.param}"
   let doc := params.textDocument
   let changes := params.contentChanges
   let fs ← ensureFile doc.uri
-  let fs := { fs with
-    changes := fs.changes.push ⟨time, doc.version?, changes⟩}
+  let .some v := doc.version? | onError s!"Missing version in didChange event on line {← getLine}"
+  let fs := { fs with changes := fs.changes.push ⟨time, v, changes⟩}
   modifyFileState doc.uri fs
 
-def onRpcRequest (request : Request Lean.Json) : TrackerM Unit := do
-  -- TODO : filter out uninteresting requests?
-  let .ok (params : RpcCallParams) := fromJson? request.param
-    | onError "Unable to parse didChange parameters {entry.param}"
-  let doc := params.textDocument
-  let fs ← ensureFile doc.uri
-  let fs := { fs with
-    requests := fs.requests.insert request.id params.method }
-  modifyFileState doc.uri fs
+def updateSnapshot (s : Snapshot) (changes : Array ChangeEvent): Snapshot :=
+  match changes.back? with
+  | none => s
+  | some { time := t, version := v, .. } =>
+    let changes := changes.flatMap (·.changes)
+    let newText := Lean.Server.foldDocumentChanges changes s.doc.text.toFileMap
+    let newdoc := { s.doc with
+      text := newText.source  -- avoid converting back and forth?
+      version := v }
+    { doc := newdoc, time := t, goals := #[], diags := #[] }
+
+def updateDiagnostics (uri : Uri) (fs : FileState) (diags : Array Diagnostic) : TrackerM Unit := do
+  let .some s := fs.snapshots.back? | onError s!"No existing snapshot for {uri} in updateDiagnostics"
+  if s.diags == diags then return
+  let snapshots := match fs.changes with
+  | #[] =>
+    let s := { s with diags := diags }
+    fs.snapshots.pop.push s
+  | changes =>
+    let s := { updateSnapshot s changes with diags := diags }
+    fs.snapshots.push s
+  modifyFileState uri { fs with snapshots := snapshots, changes := #[] }
+
+def onPublishDiagnostics (notif : Notification Lean.Json) : TrackerM Unit := do
+  let .ok (params : PublishDiagnosticsParams) := fromJson? notif.param
+    | onError s!"Unable to parse publishDiagnostics parameters {notif.param}"
+  let fs ← ensureFile params.uri
+  updateDiagnostics params.uri fs params.diagnostics
+
+def onRpcResponse (request : Request Lean.Json) (response : Response Lean.Json) : TrackerM Unit := do
+  return
 
 def onGetInteractiveGoalsResponse (response : Response Lean.Json) : TrackerM Unit := do
-  sorry
+  return  -- FIXME
 
 end TrackerActions
 
 
 section Processing
 
--- def processParams {paramType : Type} [self : Lean.FromJson paramType] (params : Structured) : Option paramType := do
---   let j := toJson params
---   match fromJson? j with
---   | .ok params => return params
---   | .error e => onError e; return none
-
--- def processNotification
---     (time : ZonedDateTime)
---     (_dir : MessageDirection)
---     (method : String)
---     (params? : Option Structured) : TrackerM Unit := do
---   match method with
---   | "textDocument/didOpen" => onDidOpen time params?
---   | "textDocument/didChange" => onDidChange time params?
---   | _ => onError s!"Ignored log entry: notification {method}"
-
-def processNotification'
+def processNotification
     (time : ZonedDateTime)
     (dir : MessageDirection)
     (notif : Notification Lean.Json) : TrackerM Unit := do
   match dir, notif.method with
-  | .clientToServer, "textDocument/didOpen" => onDidOpen' time notif
-  | .clientToServer, "textDocument/didChange" => onDidChange' time notif
-  | _, _ => onError s!"Ignored log entry: notification {notif.method}"
+  | .clientToServer, "textDocument/didOpen" => onDidOpen time notif
+  | .clientToServer, "textDocument/didChange" => onDidChange time notif
+  | .serverToClient, "textDocument/publishDiagnostics" => onPublishDiagnostics notif
+  | _, _ => onError s!"Ignored notification {notif.method} on line {← getLine}"
 
-def processRequest
-    (dir : MessageDirection)
-    (request : Request Lean.Json) : TrackerM Unit := do
-  match dir, request.method with
-  | .clientToServer, "$/lean/rpc/call" => onRpcRequest request
-  | _, _ => onError s!"Ignored log entry: request {request.method}"
+def processRequest (request : Request Lean.Json) : TrackerM Unit := do
+  modify fun ts => { ts with requests := ts.requests.insert request.id request }
 
 def processResponse
     (time : ZonedDateTime)
     (dir : MessageDirection)
     (response : Response Lean.Json) : TrackerM Unit := do
-  sorry
+  let ts ← get
+  let .some req := ts.requests.get? response.id | onError s!"Ignored response {response.id} on line {← getLine} (no such pending request)"
+  match dir, req.method with
+  | .clientToServer, "$/lean/rpc/call" => onRpcResponse req response
+  | _, _ => onError s!"Ignored response {response.id} ({req.method}) on line {← getLine}"
+  set { ts with requests := ts.requests.erase response.id }
 
 def processLogEntry (entry : LogEntry) : TrackerM Unit := do
   match entry.kind with
-  | .notification .. =>
+  | .notification  =>
       let .some notif := Notification.ofMessage? entry.msg
-        | onError "Unable to parse notification {entry.msg}"
-      processNotification' entry.time entry.direction notif
-  -- | .request id method params? => onError s!"Ignored log entry: {entry}"
-  | .request .. =>
+        | onError s!"Unable to parse notification {entry} on line {← getLine}"
+      processNotification entry.time entry.direction notif
+  | .request =>
       let .some request := Request.ofMessage? entry.msg
-        | onError "Unable to parse request {entry.msg}"
-      processRequest entry.direction request
-  | .response .. =>
+        | onError s!"Unable to parse request {entry} on line {← getLine}"
+      processRequest request
+  | .response =>
       let .some resp := Response.ofMessage? entry.msg
-        | onError "Unable to parse response {entry.msg}"
+        | onError s!"Unable to parse response {entry}"
       processResponse entry.time entry.direction resp
-  | _ => onError s!"Ignored log entry ({entry.direction}): {messageSummary entry.msg}"
+  | _ => onError s!"Ignored log entry ({entry.direction}) on line {← getLine}: {messageSummary entry.msg}"
+  modify fun ts => { ts with line := ts.line + 1 }
+
+open System in
+def processLogFile (path : FilePath) (watched? : Option (List Uri) := none): TrackerM Unit := do
+  let entries ← collectLogEntries path
+  -- let p := match watched? with
+  -- | some uris => fun (s : String) => uris.any (s.toSlice.contains ·)
+  -- | none => fun _ => true
+  entries.forM processLogEntry
 
 end Processing
 
