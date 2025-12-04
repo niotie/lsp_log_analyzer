@@ -3,37 +3,67 @@ import LSPLogAnalyzer
 
 open Lean
 open Parser
+open Parser.Command
+open Elab
+open Elab.Command
+open System
 open LSPLogAnalyzer
 
--- partial def testParseModuleAux (inputCtx : InputContext) (s : ModuleParserState) (msgs : MessageLog) (stxs  : Array Syntax) : IO (Array Syntax) :=
---   let rec parse (state : ModuleParserState) (msgs : MessageLog) (stxs : Array Syntax) :=
---     match parseCommand inputCtx { env := env, options := {} } state msgs with
---     | (stx, state, msgs) =>
---       if isTerminalCommand stx then
---         if !msgs.hasUnreported then
---           pure stxs
---         else do
---           msgs.forM fun msg => msg.toString >>= IO.println
---           throw (IO.userError "failed to parse file")
---       else
---         parse state msgs (stxs.push stx)
---   parse s msgs stxs
+open Std
 
--- def testParseModule (fname contents : String) : TrackerM  (TSyntax `Lean.Parser.Module.header × ModuleParserState × MessageLog) := do
---   let inputCtx := mkInputContext contents fname
---   let (header, state, messages) ← parseHeader inputCtx
---   return (header, state, messages)
+namespace Lean.Elab.DefView
 
-  -- let cmds ← testParseModuleAux env inputCtx state messages #[]
-  -- let stx := mkNode `Lean.Parser.Module.module #[header, mkListNode cmds]
-  -- pure ⟨stx.raw.updateLeading⟩
+  def getLspRange (dv : DefView) (inCtx : InputContext) : Option Lsp.Range :=
+    dv.ref.getRange?.map inCtx.fileMap.utf8RangeToLspRange
 
-open Command
+  def getId (dv : DefView) : Name :=
+    match dv.declId.find? (·.isIdent) with
+    | none => .anonymous
+    | some id => id.getId
+
+  instance : ToString DefKind where
+    toString
+    | .theorem => "theorem"
+    | .abbrev => "abbrev"
+    | .opaque => "opaque"
+    | .example => "example"
+    | .instance => "instance"
+    | .def => "def"
+
+  instance : ToString DefView where
+    toString | dv@{ kind, .. } => s!"{kind} {dv.getId}"
+
+end Lean.Elab.DefView
+
+def collectDefLikes (fname : FilePath) (contents : String)
+    : CommandElabM (Array (DefView × Option Lsp.Range)) := do
+  let env ← getEnv -- FIXME : write mkFreshEnv
+  let inCtx := mkInputContext contents fname.toString
+  let pmCtx := { env, options := {} }
+  let (headerStx, mps, msgl) ← parseHeader inCtx
+  -- TODO : elab the header, not forgetting to update env
+
+  let mut mps := mps
+  let mut msgl := msgl
+  let mut res := #[]
+  let mut cmdStx := .missing
+
+  repeat
+    (cmdStx, mps, msgl) := parseCommand inCtx pmCtx mps msgl
+    -- let _ ← elabCommand cmdStx  -- TODO : necessary ?
+    if cmdStx.getNumArgs > 1 && isDefLike cmdStx[1] then
+      let defView ← mkDefView {} cmdStx[1]
+      res := res.push (defView, defView.getLspRange inCtx)
+  until isTerminalCommand cmdStx
+
+  return res
 
 #eval show Elab.Command.CommandElabM _ from do
   let fname := "/home/ameyer/Nextcloud/Eiffel/Code/lean4/lsp_log_analyzer/Example.lean"
-  let content :=
-"variable {p q r : Prop}
+  let contents :=
+"import Lean
+
+variable {p q r : Prop}
 
 theorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by
   intro hp
@@ -46,20 +76,7 @@ theorem or_comm' (h : p ∨ q) : q ∨ p := by
   left
   exact h
 "
-  let env ← getEnv
-  -- IO.println env.mainModule
-  let mod ← testParseModule env fname content
-  -- IO.println mod.raw
-  let ctx := mkInputContext content fname
-  let options ← getOptions
-  let pmCtx := { env, options }
-  let (_, mps, mlog) := parseCommand ctx pmCtx {} {}
-  let (s, _, _) := parseCommand ctx pmCtx mps mlog
-  let d ← Elab.Command.mkDefView {} s[1]
-  let { start, stop } := s.getRange?.get!
-  return (d.declId, ctx.fileMap.toPosition start, ctx.fileMap.toPosition stop)
-
-
-#check Elab.Term.getDeclName?
-
-#check Elab.DefView
+  let defs ← collectDefLikes fname contents
+  defs.forM (fun
+  | (dv, .some r) => IO.println s!"{dv} {r}"
+  | (dv, .none) => IO.println s!"{dv} (no position)")

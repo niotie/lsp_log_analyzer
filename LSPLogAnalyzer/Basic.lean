@@ -47,10 +47,10 @@ structure ChangeEvent where
   version : Nat
   changes : Array TextDocumentContentChangeEvent
 
-local instance : ToString Range where
+instance : ToString Range where
   toString | ⟨⟨sl, sc⟩, ⟨el, ec⟩⟩ => s!"[{sl}:{sc}, {el}:{ec}]"
 
-local instance : ToString TextDocumentContentChangeEvent where
+instance : ToString TextDocumentContentChangeEvent where
   toString ev := match ev with
   | .fullChange _ => "full text"
   | .rangeChange range text => s!"\"{text}\" at {range}"
