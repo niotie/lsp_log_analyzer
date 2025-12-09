@@ -1,154 +1,15 @@
 import Lean
+import LSPLogAnalyzer.Definitions
+import LSPLogAnalyzer.MyParser
 
 namespace LSPLogAnalyzer
 
 open Lean.Json
-open Lean.ToJson
 open Lean.FromJson
 open Lean.JsonRpc
 open Lean.Lsp
+
 open Std.Time
-open Lean.Server.Test.Runner.Client
-
-abbrev Uri := String
-
-section Structures
-
-instance : Lean.ToJson ZonedDateTime where
-  toJson dt := dt.toISO8601String
-
-instance : Lean.FromJson ZonedDateTime where
-  fromJson?
-    | .str s => ZonedDateTime.fromISO8601String s
-    | _ => throw "Expected string when converting JSON to ZonedDateTime"
-
-/-- LSP log entry (new format). -/
-structure LogEntry where
-  time : ZonedDateTime
-  direction : MessageDirection
-  kind : MessageKind
-  msg : Message
-  deriving Lean.FromJson, Lean.ToJson
-
-instance : ToString LogEntry where
-  toString le := pretty $ toJson le
-
-instance : ToString MessageDirection where
-  toString
-  | .serverToClient => "server→client"
-  | .clientToServer => "client→server"
-
-instance : Coe LogEntry Message := ⟨LogEntry.msg⟩
-
-
-/-- File change event. -/
-structure ChangeEvent where
-  time : ZonedDateTime
-  version : Nat
-  changes : Array TextDocumentContentChangeEvent
-
-instance : ToString Range where
-  toString | ⟨⟨sl, sc⟩, ⟨el, ec⟩⟩ => s!"[{sl}:{sc}, {el}:{ec}]"
-
-instance : ToString TextDocumentContentChangeEvent where
-  toString ev := match ev with
-  | .fullChange _ => "full text"
-  | .rangeChange range text => s!"\"{text}\" at {range}"
-
-instance : ToString ChangeEvent where
-  toString ev :=
-    let ranges := ev.changes.map toString
-    s!"[{ev.time} - version {ev.version}] " ++ ", ".intercalate ranges.toList
-
-
-/-- File snapshot. -/
-structure Snapshot where
-  time : ZonedDateTime
-  doc : TextDocumentItem
-  goals : Array InteractiveGoal  -- not used yet
-  diags : Array Diagnostic       -- not used yet
-
-instance : ToString DiagnosticSeverity where
-  toString
-  | .information => "info"
-  | .error => "error"
-  | .warning => "warning"
-  | .hint => "hint"
-
-instance : ToString Diagnostic where
-  toString diag :=
-    let s := match diag.severity? with
-    | some s => s!" ({s})"
-    | none => ""
-    s!"{diag.range}{s} {diag.message}"
-
-instance : ToString Snapshot where
-  toString snap :=
-    let v := snap.doc.version
-    let diags := match snap.diags with
-    | #[] => ""
-    | _ => "[diagnostics]\n" ++ (String.intercalate "\n" $ snap.diags.toList.map toString)
-    s!"[begin version {v} ({snap.time})]\n\
-      {snap.doc.text.trim}\n\
-      {diags}\n\
-      [end version {v}]"
-
-
-/-- Per-file replay state. -/
-structure FileState where
-  snapshots : Array Snapshot := #[]
-  changes : Array ChangeEvent := #[]
-  currentSnap : Option Snapshot := none   -- not used yet
-  currentDiags : Array Diagnostic := #[]  -- not used yet
-deriving Inhabited
-
-instance : ToString FileState where
-  toString fs :=
-    let ssnaps := String.intercalate "\n\n" $ fs.snapshots.toList.map toString
-    let schanges := match fs.changes with
-    | #[] => ""
-    | _ => "Pending changes:\n" ++ (String.intercalate "\n" $ fs.changes.toList.map toString)
-    s!"Recorded snapshots:\n{ssnaps}\n\n\
-       {schanges}"
-
-/-- Log entry tracking error. -/
-structure TrackingError where
-  message : String
-  -- entry : LogEntry
-
-instance : ToString TrackingError where
-  toString te := te.message
-
-
-/-- Global tracker. -/
-structure Tracker where
-  files : Std.TreeMap Uri FileState Ord.compare := {}
-  errors : Array TrackingError := #[]
-  line : Nat := 1
-  requests : Std.TreeMap RequestID (Request Lean.Json) := {}
-deriving Inhabited
-
-instance : ToString Tracker where
-  toString tracker :=
-    let fss := "\n\n".intercalate $ tracker.files.toList.map
-      fun (uri, fs) => s!"State for {uri}:\n\n{fs}"
-    let errors := "\n".intercalate $ tracker.errors.toList.map toString
-    let requests := "\n".intercalate $ tracker.requests.toList.map
-      fun (id, req) =>
-        let m := match req.method with
-        | "$/lean/rpc/call" =>
-            match fromJson? req.param with
-            | .ok (param : RpcCallParams) => s!"{req.method} ({param.method})"
-            | _ => req.method
-        | _ => req.method
-        s!"{id}:\t{m}"
-    s!"{fss}\n\nErrors:\n{errors}\n\nPending requests:\n{requests}"
-
-/-- Tracker monad. -/
-abbrev TrackerM := StateT Tracker IO
-
-end Structures
-
 
 section Utils
 
@@ -207,8 +68,9 @@ def onDidOpen (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM
     | onError "Unable to parse didOpen parameters {entry.param}"
   let doc := params.textDocument
   let fs ← ensureFile doc.uri
+  let deflikes ← runCollectDefLikes doc.uri doc.text
   let fs := { fs with
-    snapshots := fs.snapshots.push ⟨time, doc, #[], #[]⟩
+    snapshots := fs.snapshots.push ⟨time, doc, #[], #[], deflikes⟩
     changes := #[] }
   modifyFileState doc.uri fs
 
@@ -231,7 +93,7 @@ def updateSnapshot (s : Snapshot) (changes : Array ChangeEvent): Snapshot :=
     let newdoc := { s.doc with
       text := newText.source  -- avoid converting back and forth?
       version := v }
-    { doc := newdoc, time := t, goals := #[], diags := #[] }
+    {s with doc := newdoc, time := t, goals := #[] }
 
 def updateDiagnostics (uri : Uri) (fs : FileState) (diags : Array Diagnostic) : TrackerM Unit := do
   let .some s := fs.snapshots.back? | onError s!"No existing snapshot for {uri} in updateDiagnostics"

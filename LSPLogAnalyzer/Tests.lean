@@ -42,3 +42,24 @@ def f (path : System.FilePath): IO Unit := do
   IO.println fmt
 
 #eval f (System.mkFilePath [".", "logs", "LSP_2025-11-25-16-54-08-9505+0100.log"])
+
+#eval show Elab.Command.CommandElabM _ from do
+  let fname := "/home/ameyer/Nextcloud/Eiffel/Code/lean4/lsp_log_analyzer/Example.lean"
+  let contents :=
+"import Lean
+
+variable {p q r : Prop}
+
+theorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by
+  intro hp
+  exact hqr (hpq hp)
+
+theorem or_comm' (h : p ∨ q) : q ∨ p := by
+  rcases h with h | h
+  right
+  exact h
+  left
+  exact h
+"
+  let defs ← LSPLogAnalyzer.collectDefLikes fname contents
+  defs.forM (IO.println ·)
