@@ -44,6 +44,13 @@ structure ChangeEvent where
   version : Nat
   changes : Array TextDocumentContentChangeEvent
 
+instance instMemPosRange : Membership Position Range where
+  mem r p := r.start <= p ∧ p ≤ r.end
+
+instance (p : Position) (r : Range) : Decidable (p ∈ r) := by
+  rw [instMemPosRange]
+  exact instDecidableAnd
+
 instance : ToString Range where
   toString | ⟨⟨sl, sc⟩, ⟨el, ec⟩⟩ => s!"[{sl}:{sc}, {el}:{ec}]"
 
@@ -92,7 +99,7 @@ structure Definition where
 
 instance : ToString Definition where
   toString
-  | { name, range, defview, .. } => s!"{defview.kind} {range} {name}"
+  | { name, range, defview, .. } => s!"{range} {defview.kind} {name}"
 
 
 /-- File snapshot. -/
@@ -120,17 +127,14 @@ instance : ToString Diagnostic where
 instance : ToString Snapshot where
   toString snap :=
     let v := snap.doc.version
-    let diags := match snap.diags with
-    | #[] => ""
-    | _ => s!"[diagnostics]\n{String.intercalate "\n" $ snap.diags.toList.map toString}\n"
     let deflikes := match snap.deflikes with
     | #[] => ""
     | _ => s!"[definitions]\n{String.intercalate "\n" $ snap.deflikes.toList.map toString}\n"
+    let diags := match snap.diags with
+    | #[] => ""
+    | _ => s!"[global diagnostics]\n{String.intercalate "\n" $ snap.diags.toList.map toString}\n"
     s!"[begin version {v} ({snap.time})]\n\
-      {snap.doc.text.trim}\n\
-      {diags}\
-      {deflikes}\
-      [end version {v}]"
+      {snap.doc.text.trim}\n{diags}{deflikes}[end version {v}]"
 
 
 /-- Per-file replay state. -/
@@ -139,7 +143,6 @@ structure FileState where
   changes : Array ChangeEvent := #[]
   currentSnap : Option Snapshot := none   -- not used yet
   currentDiags : Array Diagnostic := #[]  -- not used yet
-deriving Inhabited
 
 instance : ToString FileState where
   toString fs :=
@@ -147,7 +150,7 @@ instance : ToString FileState where
     let schanges := match fs.changes with
     | #[] => ""
     | _ => "Pending changes:\n" ++ (String.intercalate "\n" $ fs.changes.toList.map toString)
-    s!"Recorded snapshots:\n{ssnaps}\n\n\
+    s!"Recorded snapshots:\n{ssnaps}\n\
        {schanges}"
 
 /-- Log entry tracking error. -/
@@ -181,7 +184,7 @@ instance : ToString Tracker where
             | _ => req.method
         | _ => req.method
         s!"{id}:\t{m}"
-    s!"{fss}\n\nErrors:\n{errors}\n\nPending requests:\n{requests}"
+    s!"{fss}\nErrors:\n{errors}\n\nPending requests:\n{requests}"
 
 /-- Tracker monad. -/
 abbrev TrackerM := StateT Tracker IO

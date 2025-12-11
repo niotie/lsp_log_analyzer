@@ -1,8 +1,7 @@
 import Lean
 import LSPLogAnalyzer.Definitions
+import LSPLogAnalyzer.Utils
 import LSPLogAnalyzer.MyParser
-
-namespace LSPLogAnalyzer
 
 open Lean.Json
 open Lean.FromJson
@@ -11,50 +10,7 @@ open Lean.Lsp
 
 open Std.Time
 
-section Utils
-
-open IO.FS in
-def fileStream (filename : System.FilePath) : IO Stream := do
-  return .ofHandle (← Handle.mk filename Mode.read)
-
-def parseLogLine (line : String) : Except String LogEntry := do
-  Lean.fromJson? (← parse line)
-
-private def ensureFile (uri : String) : TrackerM FileState := do
-  let st ← get
-  match st.files.get? uri with
-  | some fs => return fs
-  | none =>
-    let fs : FileState := {}
-    set { st with files := st.files.insert uri fs }
-    return fs
-
-def messageSummary : Message → String
-  | .request id method@"$/lean/rpc/call" (some params) =>
-      let rpcmethod := params.toJson.getObjValAs? String "method" |>.toOption
-      s!"request {id} - {method} {rpcmethod.getD "unknown method"}"
-  | .request id method _params? => s!"request {id} - {method}"
-  | .notification method _params? => s!"notification - {method}"
-  | .response id _result => s!"response {id}"
-  | .responseError id _errCode _msg _params? => s!"response error {id}"
-
-def logEntrySummary (e : LogEntry) : String := messageSummary e.msg
-
-def getLine : TrackerM Nat := do
-  return (← get).line
-
-def collectLogEntries (path : System.FilePath) : IO (Array LogEntry) := do
-  let log ← IO.FS.readFile path
-  let log := log.trimRight
-  let entries := log.splitOn "\n" |>.toArray
-  let entries := entries.map parse
-  let entries ← IO.ofExcept <| entries.mapM id
-  IO.ofExcept <| entries.mapM fromJson?
-
-def modifyFileState (uri : Uri) (fs : FileState) : TrackerM Unit := do
-  modify fun s => { s with files := s.files.insert uri fs }
-
-end Utils
+namespace LSPLogAnalyzer
 
 section TrackerActions
 
@@ -65,10 +21,11 @@ def onError (e : String)
 
 def onDidOpen (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM Unit := do
   let .ok (params : LeanDidOpenTextDocumentParams) := fromJson? notif.param
-    | onError "Unable to parse didOpen parameters {entry.param}"
+    | onError s!"Unable to parse didOpen parameters {notif.param}"
   let doc := params.textDocument
+  let env ← prepareBaseEnv doc.uri `DummyModule
   let fs ← ensureFile doc.uri
-  let deflikes ← runCollectDefLikes doc.uri doc.text
+  let deflikes ← runCollectDefLikes env doc.uri doc.text
   let fs := { fs with
     snapshots := fs.snapshots.push ⟨time, doc, #[], #[], deflikes⟩
     changes := #[] }

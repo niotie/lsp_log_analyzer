@@ -10,10 +10,9 @@ open System
 
 open Std
 
-
 namespace LSPLogAnalyzer
 
-def collectDefLikes (fname : FilePath) (contents : String)
+def collectDefLikes (env : Environment) (fname : FilePath) (contents : String)
     : CommandElabM (Array Definition) := do
   let env ← getEnv
   let inCtx := mkInputContext contents fname.toString
@@ -38,17 +37,35 @@ def collectDefLikes (fname : FilePath) (contents : String)
 
   return res
 
-def runCollectDefLikes (fname : FilePath) (contents : String)
+-- def runCollectDefLikes (fname : FilePath) (contents : String)
+--     : IO (Array Definition) := do
+--   let action := collectDefLikes fname contents
+--   let ctx := {
+--     fileName := fname.toString,
+--     fileMap := FileMap.ofString contents,
+--     snap? := none,
+--     cancelTk? := none }
+--   let env ← mkEmptyEnvironment
+--   let s := { env := env, maxRecDepth := 100000 }
+--   action.run ctx |>.run' s |>.toIO
+--     fun _ => IO.Error.mkOtherError 0 "dunno"
+
+
+def prepareBaseEnv (fname : String) (modName : Name) : IO Environment := do
+  let .some env ← runFrontend "" {} fname modName | throw $ IO.userError "unable to create base env"
+  return env
+
+
+def runCollectDefLikes (env : Environment) (fileName contents : String)
     : IO (Array Definition) := do
-  let action := collectDefLikes fname contents
-  let ctx := {
-    fileName := fname.toString,
-    fileMap := FileMap.ofString contents,
+  let ctx : Context := {
+    fileName := fileName,
+    fileMap := FileMap.ofString "",
     snap? := none,
     cancelTk? := none }
-  let env ← mkEmptyEnvironment
-  let s := { env := env, maxRecDepth := 10 }
-  action.run ctx |>.run' s |>.toIO
-    fun _ => IO.Error.mkOtherError 0 "dunno"
+  let s : State := { env := env, maxRecDepth := 100 }
+  let action := collectDefLikes env fileName contents
+  action.run ctx |>.run' s |>.toIO fun e =>
+    IO.Error.mkOtherError 0 s!"error collecting definitions : {e.getRef}"
 
 end LSPLogAnalyzer

@@ -15,8 +15,8 @@ open Server.Test.Runner
     let path := System.mkFilePath [".", "logs",
       -- "LSP_2025-11-25-16-54-08-9505+0100.log"
       -- "LSP_2025-11-27-23-08-49-7081+0100.sample.log"
-      -- "LSP_2025-12-03-14-26-00-5626+0100.log"
-      "logsample.log"
+      "LSP_2025-12-09-18-26-16-7165+0100.log"
+      -- "logsample.log"
     ]
     let (_, st) ← processLogFile path |>.run {}
     return st
@@ -43,9 +43,11 @@ def f (path : System.FilePath): IO Unit := do
 
 #eval f (System.mkFilePath [".", "logs", "LSP_2025-11-25-16-54-08-9505+0100.log"])
 
-#eval show Elab.Command.CommandElabM _ from do
-  let fname := "/home/ameyer/Nextcloud/Eiffel/Code/lean4/lsp_log_analyzer/Example.lean"
-  let contents :=
+
+-- Test for the collection of definitions
+def ex_fname := "/home/ameyer/Nextcloud/Eiffel/Code/lean4/lsp_log_analyzer/Example.lean"
+
+def ex_contents :=
 "import Lean
 
 variable {p q r : Prop}
@@ -61,5 +63,12 @@ theorem or_comm' (h : p ∨ q) : q ∨ p := by
   left
   exact h
 "
-  let defs ← LSPLogAnalyzer.collectDefLikes fname contents
+
+#eval show _ from do
+  let env ← prepareBaseEnv ex_fname `DummyModule
+  -- IO.println $ env.constants.toList.map (·.fst)
+  let defs ← runCollectDefLikes env ex_fname ex_contents
   defs.forM (IO.println ·)
+  -- defs.forM (fun d : Definition => IO.println d.defview.ref)
+  let .some (i, defn) := locatePos defs ⟨4, 9⟩ | return
+  IO.println $ relativeRange defn.range defn.range
