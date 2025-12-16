@@ -7,15 +7,15 @@ open Parser.Command
 open Elab
 open Elab.Command
 open System
+open Lsp
 
 open Std
 
 namespace LSPLogAnalyzer
 
-def collectDefLikes (env : Environment) (fname : FilePath) (contents : String)
-    : CommandElabM (Array Definition) := do
+def collectDefLikes (doc : TextDocumentItem) : CommandElabM (Array Definition) := do
   let env ← getEnv
-  let inCtx := mkInputContext contents fname.toString
+  let inCtx := mkInputContext doc.text doc.uri
   let pmCtx := { env, options := {} }
   let (headerStx, mps, msgl) ← parseHeader inCtx
   -- TODO : elab the header? (not forgetting to update env)
@@ -30,9 +30,14 @@ def collectDefLikes (env : Environment) (fname : FilePath) (contents : String)
     -- let _ ← elabCommand cmdStx  -- TODO : necessary ?
     if cmdStx.getNumArgs > 1 && isDefLike cmdStx[1] then
       let defview ← mkDefView {} cmdStx[1]
-      let name := defview.getId
-      let range := defview.getLspRange inCtx
-      res := res.push { name, defview, range }
+      let defn := {
+        name := defview.getId
+        version := doc.version
+        kind := defview.kind
+        range? := some $ defview.getLspRange inCtx
+        defview? := some defview
+      }
+      res := res.push defn
   until isTerminalCommand cmdStx
 
   return res
@@ -51,20 +56,15 @@ def collectDefLikes (env : Environment) (fname : FilePath) (contents : String)
 --     fun _ => IO.Error.mkOtherError 0 "dunno"
 
 
-def prepareBaseEnv (fname : String) (modName : Name) : IO Environment := do
-  let .some env ← runFrontend "" {} fname modName | throw $ IO.userError "unable to create base env"
-  return env
-
-
-def runCollectDefLikes (env : Environment) (fileName contents : String)
+def runCollectDefLikes (env : Environment) (doc : TextDocumentItem)
     : IO (Array Definition) := do
   let ctx : Context := {
-    fileName := fileName,
-    fileMap := FileMap.ofString "",
+    fileName := doc.uri,
+    fileMap := FileMap.ofString doc.text,
     snap? := none,
     cancelTk? := none }
   let s : State := { env := env, maxRecDepth := 100 }
-  let action := collectDefLikes env fileName contents
+  let action := collectDefLikes doc
   action.run ctx |>.run' s |>.toIO fun e =>
     IO.Error.mkOtherError 0 s!"error collecting definitions : {e.getRef}"
 

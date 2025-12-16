@@ -64,11 +64,18 @@ theorem or_comm' (h : p ∨ q) : q ∨ p := by
   exact h
 "
 
+#eval IO.println $ normalizeText ex_contents
+
 #eval show _ from do
   let env ← prepareBaseEnv ex_fname `DummyModule
   -- IO.println $ env.constants.toList.map (·.fst)
-  let defs ← runCollectDefLikes env ex_fname ex_contents
+  let doc : TextDocumentItem := {
+    uri := ex_fname
+    text := ex_contents
+    languageId := "Lean"
+    version := 1
+  }
+  let defs ← runCollectDefLikes env doc
   defs.forM (IO.println ·)
   -- defs.forM (fun d : Definition => IO.println d.defview.ref)
-  let .some (i, defn) := locatePos defs ⟨4, 9⟩ | return
-  IO.println $ relativeRange defn.range defn.range
+  IO.println $ locatePos defs ⟨4, 9⟩

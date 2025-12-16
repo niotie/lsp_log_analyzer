@@ -90,24 +90,60 @@ namespace Lean.Elab.DefView
 
 end Lean.Elab.DefView
 
+instance : ToString DiagnosticSeverity where
+  toString
+  | .information => "info"
+  | .error => "error"
+  | .warning => "warning"
+  | .hint => "hint"
+
+instance : ToString Diagnostic where
+  toString diag :=
+    let s := match diag.severity? with
+    | some s => s!" ({s})"
+    | none => ""
+    s!"{diag.range}{s} {diag.message}"
+
+structure LocalDiagnostic where
+  localRange : Range
+  diag : Diagnostic
+
+instance : ToString LocalDiagnostic where
+  toString ldiag :=
+    toString { ldiag.diag with range := ldiag.localRange }
+
+instance : BEq LocalDiagnostic where
+  beq ld ld' :=
+    ld.localRange == ld'.localRange && ld.diag.message == ld'.diag.message
+    -- { ld.diag with range := ld.localRange } == { ld'.diag with range := ld'.localRange }
+
 /-- File snapshot. -/
 structure Definition where
   name : Lean.Name
-  range : Range
-  defview : DefView
-  diags : Array Diagnostic := #[]
+  version : Nat
+  kind : DefKind
+  range? : Option Range
+  defview? : Option DefView
+  localDiags : Array LocalDiagnostic := #[]
 
 instance : ToString Definition where
   toString
-  | { name, range, defview, .. } => s!"{range} {defview.kind} {name}"
-
+  | { name, version, kind, range?, localDiags, .. } =>
+    let r := match range? with
+    | none => "no definition in file"
+    | some r => s!"range {r}"
+    let ds := match localDiags with
+    | #[] => ""
+    | _ => s!"\n{localDiags.size} local diagnostics:\n\
+            {"\n".intercalate (localDiags.toList.map toString)}"
+    s!"{kind} {name} (v{version}): {r}{ds}"
 
 /-- File snapshot. -/
 structure Snapshot where
   time : ZonedDateTime
   doc : TextDocumentItem
-  goals : Array Lean.Widget.InteractiveGoal  -- not used yet
-  diags : Array Diagnostic
+  -- goals : Array Lean.Widget.InteractiveGoal  -- not used yet
+  globalDiags : Array Diagnostic
   deflikes : Array Definition
 
 instance : ToString DiagnosticSeverity where
@@ -130,28 +166,35 @@ instance : ToString Snapshot where
     let deflikes := match snap.deflikes with
     | #[] => ""
     | _ => s!"[definitions]\n{String.intercalate "\n" $ snap.deflikes.toList.map toString}\n"
-    let diags := match snap.diags with
+    let diags := match snap.globalDiags with
     | #[] => ""
-    | _ => s!"[global diagnostics]\n{String.intercalate "\n" $ snap.diags.toList.map toString}\n"
+    | _ => s!"[global diagnostics]\n{String.intercalate "\n" $ snap.globalDiags.toList.map toString}\n"
     s!"[begin version {v} ({snap.time})]\n\
       {snap.doc.text.trim}\n{diags}{deflikes}[end version {v}]"
 
 
 /-- Per-file replay state. -/
 structure FileState where
+  baseEnv : Lean.Environment
+  defMap : Std.HashMap String (Array Definition) := {}
+  defArray : Array Definition := #[]
   snapshots : Array Snapshot := #[]
   changes : Array ChangeEvent := #[]
-  currentSnap : Option Snapshot := none   -- not used yet
-  currentDiags : Array Diagnostic := #[]  -- not used yet
 
 instance : ToString FileState where
   toString fs :=
     let ssnaps := String.intercalate "\n\n" $ fs.snapshots.toList.map toString
+    let sdefs := match fs.defMap.size with
+    | 0 => ""
+    | _ =>
+      let tmp := fs.defMap.values.map
+        fun da : Array Definition => da.toList.map toString
+      let strings := tmp.map ("\n".intercalate)
+      s!"[definitions]\n{"\n".intercalate strings}\n"
     let schanges := match fs.changes with
     | #[] => ""
     | _ => "Pending changes:\n" ++ (String.intercalate "\n" $ fs.changes.toList.map toString)
-    s!"Recorded snapshots:\n{ssnaps}\n\
-       {schanges}"
+    s!"Recorded snapshots:\n{ssnaps}\n{sdefs}\n{schanges}"
 
 /-- Log entry tracking error. -/
 structure TrackingError where
@@ -164,10 +207,10 @@ instance : ToString TrackingError where
 
 /-- Global tracker. -/
 structure Tracker where
-  files : Std.TreeMap Uri FileState Ord.compare := {}
+  files : Std.HashMap Uri FileState := {}
   errors : Array TrackingError := #[]
   line : Nat := 1
-  requests : Std.TreeMap RequestID (Request Lean.Json) := {}
+  requests : Std.HashMap RequestID (Request Lean.Json) := {}
 deriving Inhabited
 
 instance : ToString Tracker where
