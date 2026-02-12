@@ -14,9 +14,7 @@ namespace LSPLogAnalyzer
 
 section TrackerActions
 
-def onError (e : String)
-  -- (entry : LogEntry)
-  : TrackerM Unit := do
+def onError (e : String) : TrackerM Unit := do
   modify fun st => { st with errors := st.errors.push ⟨e⟩ }
 
 def onDidOpen (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM Unit := do
@@ -52,16 +50,16 @@ def maybeUpdateDefs
         match defs? >>= Array.back? with
         | none => some #[newDef]
         | some oldDef =>
-            -- TODO : fixme, never pushes anything
-            if newDef.localDiags.all fun d => oldDef.localDiags.any fun d' => d == d' then
-              defs?
+          -- TODO : diags are ordered by position, do this more efficiently?
+          if newDef.localDiags.all fun d => oldDef.localDiags.any fun d' => d == d' then
+            defs?
+          else
+            let newStx := newDef.defview?.map (·.ref)
+            let oldStx := oldDef.defview?.map (·.ref)
+            if newStx == oldStx then
+              defs? >>= (·.pop.push newDef)
             else
-              let newStx := newDef.defview?.map (·.ref)
-              let oldStx := oldDef.defview?.map (·.ref)
-              if newStx == oldStx then
-                defs? >>= (·.pop.push newDef)
-              else
-                defs? >>= (Array.push · newDef)
+              defs? >>= (Array.push · newDef)
 
 def recordLocalDiags
     (defs : Array Definition)
@@ -84,7 +82,8 @@ def recordLocalDiags
 
 def normalizeText (text : String) : String :=
   let lines := text.splitOn "\n"
-    |>.map String.trimRight
+    |>.map String.trimAsciiEnd
+    |>.map toString
     |>.filter (not ·.isEmpty)
   "\n".intercalate lines
 
@@ -124,10 +123,10 @@ def onPublishDiagnostics (notif : Notification Lean.Json) : TrackerM Unit := do
     | onError s!"Unable to parse publishDiagnostics parameters {notif.param}"
   updateDiagnostics params.uri params.diagnostics
 
-def onRpcResponse (request : Request Lean.Json) (response : Response Lean.Json) : TrackerM Unit := do
+def onRpcResponse (_request : Request Lean.Json) (_response : Response Lean.Json) : TrackerM Unit := do
   return
 
-def onGetInteractiveGoalsResponse (response : Response Lean.Json) : TrackerM Unit := do
+def onGetInteractiveGoalsResponse (_response : Response Lean.Json) : TrackerM Unit := do
   return  -- FIXME
 
 end TrackerActions
@@ -149,7 +148,7 @@ def processRequest (request : Request Lean.Json) : TrackerM Unit := do
   modify fun ts => { ts with requests := ts.requests.insert request.id request }
 
 def processResponse
-    (time : ZonedDateTime)
+    (_time : ZonedDateTime)
     (dir : MessageDirection)
     (response : Response Lean.Json) : TrackerM Unit := do
   let ts ← get
@@ -158,6 +157,15 @@ def processResponse
   match dir, req.method with
   -- | .clientToServer, "$/lean/rpc/call" => onRpcResponse req response
   | _, _ => onError s!"Ignored response {response.id} ({req.method}) on line {← getLine}"
+  set { ts with requests := ts.requests.erase response.id }
+
+def processResponseError
+    (_time : ZonedDateTime)
+    (_dir : MessageDirection)
+    (response : ResponseError Lean.Json) : TrackerM Unit := do
+  let ts ← get
+  let .some _ := ts.requests.get? response.id
+    | onError s!"Ignored response {response.id} on line {← getLine} (no such pending request)"
   set { ts with requests := ts.requests.erase response.id }
 
 def processLogEntry (entry : LogEntry) : TrackerM Unit := do
@@ -174,11 +182,15 @@ def processLogEntry (entry : LogEntry) : TrackerM Unit := do
       let .some resp := Response.ofMessage? entry.msg
         | onError s!"Unable to parse response {entry}"
       processResponse entry.time entry.direction resp
-  | _ => onError s!"Ignored log entry ({entry.direction}) on line {← getLine}: {messageSummary entry.msg}"
+  | .responseError =>
+      let .some respErr := ResponseError.ofMessage? entry.msg
+        | onError s!"Unable to parse response {entry}"
+      processResponseError entry.time entry.direction respErr
+  -- | _ => onError s!"Ignored log entry ({entry.direction}) on line {← getLine}: {messageSummary entry.msg}"
   modify fun ts => { ts with line := ts.line + 1 }
 
 open System in
-def processLogFile (path : FilePath) (watched? : Option (List Uri) := none): TrackerM Unit := do
+def processLogFile (path : FilePath) (_watched? : Option (List Uri) := none): TrackerM Unit := do
   let entries ← collectLogEntries path
   -- let p := match watched? with
   -- | some uris => fun (s : String) => uris.any (s.toSlice.contains ·)
