@@ -61,23 +61,27 @@ def maybeUpdateDefs
             else
               defs? >>= (Array.push · newDef)
 
-def recordLocalDiags
-    (defs : Array Definition)
-    (diags : Array Diagnostic)
-    : (Array Definition × Array Diagnostic) :=
-  diags.foldl go (defs, #[])
+def mkLocalDiag (defs : Array Definition) (diag : Diagnostic)
+    : TrackerM $ Option (Nat × LocalDiagnostic) := do
+  let .some (i, defn) := locatePos defs diag.range.start
+    | onError s!"no definition found at position {diag.range.start} in {defs}"
+      return none
+  let .some dr := defn.range?
+    | onError s!"no range for definition {defn}"
+      return none
+  let localRange := relativeRange dr diag.range
+  let localDiag := { diag, localRange }
+  return some (i, localDiag)
+
+def recordLocalDiags (defs : Array Definition) (diags : Array Diagnostic)
+    : TrackerM (Array Definition × Array Diagnostic) :=
+  diags.foldlM go (defs, #[])
   where
-    go acc diag :=
+    go acc diag := do
       let (res, remainingDiags) := acc
-      let tmp : Option (Nat × LocalDiagnostic) := do
-        let (i, defn) ← locatePos defs diag.range.start
-        let dr ← defn.range?
-        let localRange := relativeRange dr diag.range
-        let localDiag := { diag, localRange }
-        return (i, localDiag)
-      match tmp with
-      | none => (res, remainingDiags.push diag)
-      | some (i, ld) => (res.modify i fun d =>
+      match ← mkLocalDiag defs diag with
+      | none => return (res, remainingDiags.push diag)
+      | some (i, ld) => return (res.modify i fun d =>
         { d with localDiags := d.localDiags.push ld }, remainingDiags)
 
 def normalizeText (text : String) : String :=
@@ -97,15 +101,18 @@ def updateDiagnostics (uri : Uri) (diags : Array Diagnostic) : TrackerM Unit := 
   | some { time, version, .. } =>
     let changes := fs.changes.flatMap (·.changes)
     let newText := Lean.Server.foldDocumentChanges changes s.doc.text.toFileMap
-    if normalizeText newText.source == normalizeText s.doc.text then
+    -- Used to be :
+    -- if normalizeText newText.source == normalizeText s.doc.text
+    -- TODO : check how to safely ignore text versions
+    if newText.source == s.doc.text then
       pure (s.doc, fs.defArray, s.time, false)
     else
       -- TODO : avoid converting back and forth?
       let newdoc := { s.doc with version, text := newText.source }
       let defArray ← runCollectDefLikes fs.baseEnv newdoc
       pure (newdoc, defArray, time, true)
-  let (defArray, globalDiags) := recordLocalDiags defArray diags
-  let s := {s with doc := doc, time, globalDiags }
+  let (defArray, globalDiags) ← recordLocalDiags defArray diags
+  let s := {s with doc, time, globalDiags }
   let fs := if docHasChanged? then
     { fs with
       snapshots := fs.snapshots.push s
@@ -196,6 +203,31 @@ def processLogFile (path : FilePath) (_watched? : Option (List Uri) := none): Tr
   -- | some uris => fun (s : String) => uris.any (s.toSlice.contains ·)
   -- | none => fun _ => true
   entries.forM processLogEntry
+
+open System in
+def dumpFileStates (path : FilePath) : IO Unit := do
+  let .some "log" := path.extension
+    | IO.eprint s!"path should have extension .log"
+  let .some stem := path.fileStem
+    | IO.eprint s!"could not determine path stem"
+  let .some dir := path.parent
+    | IO.eprint s!"could not determine parent dir"
+  let dirPath := dir.join (System.mkFilePath [stem])
+  IO.FS.createDirAll dirPath
+  let (_, st) ← processLogFile path |>.run {}
+  st.files.forM (
+    fun (uri : Uri) (fs : FileState) => do
+      fs.snapshots.forM (
+        fun snap => do
+          let .some fileStem := System.FilePath.fileStem uri
+            | IO.eprint s!"could not determine file name for {uri}"
+          let fileName := s!"{fileStem}.{snap.time.format "yyyy-MM-dd.HH:mm:ss"}.lean"
+          let path' := dirPath.join fileName
+          let stream := IO.FS.Stream.ofHandle (← IO.FS.Handle.mk path' IO.FS.Mode.write)
+          IO.FS.Stream.putStr stream snap.doc.text
+      )
+      -- let fpath := dir.join uri |>.join
+  )
 
 end Processing
 

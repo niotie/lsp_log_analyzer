@@ -128,15 +128,25 @@ structure Definition where
 
 instance : ToString Definition where
   toString
-  | { name, version, kind, range?, localDiags, .. } =>
-    let r := match range? with
-    | none => "no definition in file"
-    | some r => s!"range {r}"
-    let ds := match localDiags with
-    | #[] => ""
-    | _ => s!"\n{localDiags.size} local diagnostics:\n\
-            {"\n".intercalate (localDiags.toList.map toString)}"
-    s!"{kind} {name} (v{version}): {r}{ds}"
+  | { version, defview?, localDiags, .. } =>
+    let details := do
+      -- let r ← range?
+      let dv ← defview?
+      let src ← dv.ref.reprint
+      let ds := match localDiags with
+      | #[] => ""
+      | _ => s!"[local diagnostics ({localDiags.size})]\n\
+                {"\n".intercalate (localDiags.toList.map toString)}"
+      return s!"{src.trimAsciiEnd}\n\n{ds}"
+    s!"[in v{version}]\n{details.getD "<no available definition>\n"}"
+
+-- instance : ToString Definition where
+--   toString
+--   | { name, version, kind, range?, .. } =>
+--     let r := match range? with
+--     | none => "not in file"
+--     | some r => s!"{r}"
+--     s!"{kind} {name} (v{version}, {r})"
 
 /-- File snapshot. -/
 structure Snapshot where
@@ -170,7 +180,7 @@ instance : ToString Snapshot where
     | #[] => ""
     | _ => s!"[global diagnostics]\n{String.intercalate "\n" $ snap.globalDiags.toList.map toString}\n"
     s!"[begin version {v} ({snap.time})]\n\
-      {snap.doc.text.trim}\n{diags}{deflikes}[end version {v}]"
+      {snap.doc.text.trimAscii}\n{diags}{deflikes}[end version {v}]"
 
 
 /-- Per-file replay state. -/
@@ -187,10 +197,11 @@ instance : ToString FileState where
     let sdefs := match fs.defMap.size with
     | 0 => ""
     | _ =>
-      let tmp := fs.defMap.values.map
-        fun da : Array Definition => da.toList.map toString
-      let strings := tmp.map ("\n".intercalate)
-      s!"[definitions]\n{"\n".intercalate strings}\n"
+      let strings := fs.defMap.toList.map
+        fun (dn, (da : Array Definition)) =>
+          dn ++ "\n" ++ "\n\n".intercalate (da.toList.map toString)
+
+      s!"[definitions]\n{"\n\n".intercalate strings}\n"
     let schanges := match fs.changes with
     | #[] => ""
     | _ => "Pending changes:\n" ++ (String.intercalate "\n" $ fs.changes.toList.map toString)

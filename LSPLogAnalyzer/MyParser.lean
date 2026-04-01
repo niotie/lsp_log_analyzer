@@ -14,11 +14,25 @@ open Std
 namespace LSPLogAnalyzer
 
 def collectDefLikes (doc : TextDocumentItem) : CommandElabM (Array Definition) := do
-  let env ← getEnv
   let inCtx := mkInputContext doc.text doc.uri
-  let pmCtx := { env, options := {} }
+  let options := {}
+
   let (headerStx, mps, msgl) ← parseHeader inCtx
-  -- TODO : elab the header? (not forgetting to update env)
+  -- IO.println s!"Header: {headerStx}"
+
+  -- Elab and execute the header
+  let mut env ← getEnv
+  -- IO.println s!"Env before header elab: {env.constants.toList.length} constants"
+  env ← (do elabCommand headerStx; getEnv)
+  -- IO.println s!"Env after header elab: {env.constants.toList.length} constants"
+  let mut ctx : Context := {
+    fileName := doc.uri,
+    fileMap := FileMap.ofString doc.text,
+    snap? := none,
+    cancelTk? := none }
+  let mut state : State := { env := env, maxRecDepth := 100 }
+  (elabCommand headerStx).run ctx |>.run' state
+  -- IO.println s!"Env after header execution: {env.constants.toList.length}"
 
   let mut mps := mps
   let mut msgl := msgl
@@ -26,18 +40,24 @@ def collectDefLikes (doc : TextDocumentItem) : CommandElabM (Array Definition) :
   let mut cmdStx := .missing
 
   repeat
-    (cmdStx, mps, msgl) := parseCommand inCtx pmCtx mps msgl
-    -- let _ ← elabCommand cmdStx  -- TODO : necessary ?
-    if cmdStx.getNumArgs > 1 && isDefLike cmdStx[1] then
-      let defview ← mkDefView {} cmdStx[1]
-      let defn := {
-        name := defview.getId
-        version := doc.version
-        kind := defview.kind
-        range? := some $ defview.getLspRange inCtx
-        defview? := some defview
-      }
-      res := res.push defn
+    (cmdStx, mps, msgl) := parseCommand inCtx { env, options } mps msgl
+    env ← do elabCommand cmdStx; getEnv
+    (elabCommand cmdStx).run ctx |>.run' state
+
+    -- IO.println cmdStx[1]
+    if cmdStx.getNumArgs > 1 then
+      if isDefLike cmdStx[1] then
+        let defview ← mkDefView {} cmdStx[1]
+        let defn := {
+          name := defview.getId
+          version := doc.version
+          kind := defview.kind
+          range? := some $ defview.getLspRange inCtx
+          defview? := some defview
+        }
+        res := res.push defn
+      -- else
+        -- IO.println "not a command"
   until isTerminalCommand cmdStx
 
   return res
