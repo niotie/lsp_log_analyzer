@@ -222,6 +222,7 @@ structure Tracker where
   errors : Array TrackingError := #[]
   line : Nat := 1
   requests : Std.HashMap RequestID (Request Lean.Json) := {}
+
 deriving Inhabited
 
 instance : ToString Tracker where

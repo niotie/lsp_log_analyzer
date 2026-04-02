@@ -10,6 +10,13 @@ open Lean.Elab
 
 namespace LSPLogAnalyzer
 
+def normalizeText (text : String) : String :=
+  let lines := text.splitOn "\n"
+    |>.map String.trimAsciiEnd
+    |>.map toString
+    |>.filter (not ·.isEmpty)
+  "\n".intercalate lines
+
 open IO.FS in
 def fileStream (filename : System.FilePath) : IO Stream := do
   return .ofHandle (← Handle.mk filename Mode.read)
@@ -48,7 +55,7 @@ def getLine : TrackerM Nat := do
 
 def collectLogEntries (path : System.FilePath) : IO (Array LogEntry) := do
   let log ← IO.FS.readFile path
-  let log := log.trimRight
+  let log := log.trimAsciiEnd.toString
   let entries := log.splitOn "\n" |>.toArray
   let entries := entries.map parse
   let entries ← IO.ofExcept <| entries.mapM id
@@ -81,5 +88,8 @@ def relativeRange (enclosing inner : Range) : Range :=
 -- def updateDefDiag (defn : Definition) (diag : Diagnostic) : Definition :=
 --   let diag := { diag with range := relativeRange defn.range diag.range }
 --   { defn with diags := defn.diags.push diag }
+
+def onError (e : String) : TrackerM Unit := do
+  modify fun st => { st with errors := st.errors.push ⟨e⟩ }
 
 end LSPLogAnalyzer
