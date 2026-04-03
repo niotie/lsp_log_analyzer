@@ -6,6 +6,7 @@ open Lean.ToJson
 open Lean.FromJson
 open Lean.JsonRpc
 open Lean.Lsp
+open Lean.Parser
 open Lean.Elab
 
 
@@ -125,6 +126,8 @@ structure Definition where
   range? : Option Range
   defview? : Option DefView
   localDiags : Array LocalDiagnostic := #[]
+  infotrees : Lean.PersistentArray InfoTree := {}
+  proofStates : Array (Nat × Nat × String) := #[]  -- (line, col, goalsBefore)
 
 instance : ToString Definition where
   toString
@@ -155,6 +158,7 @@ structure Snapshot where
   -- goals : Array Lean.Widget.InteractiveGoal  -- not used yet
   globalDiags : Array Diagnostic
   deflikes : Array Definition
+  elabState : IncrementalState
 
 instance : ToString DiagnosticSeverity where
   toString
@@ -180,7 +184,7 @@ instance : ToString Snapshot where
     | #[] => ""
     | _ => s!"[global diagnostics]\n{String.intercalate "\n" $ snap.globalDiags.toList.map toString}\n"
     s!"[begin version {v} ({snap.time})]\n\
-      {snap.doc.text.trimAscii}\n{diags}{deflikes}[end version {v}]"
+      {snap.doc.text.trimAscii}\n{diags}{deflikes}{snap.elabState.commands.repr}[end version {v}]"
 
 
 /-- Per-file replay state. -/
@@ -222,7 +226,7 @@ structure Tracker where
   errors : Array TrackingError := #[]
   line : Nat := 1
   requests : Std.HashMap RequestID (Request Lean.Json) := {}
-
+  baseEnv : Option Lean.Environment := none
 deriving Inhabited
 
 instance : ToString Tracker where

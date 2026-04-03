@@ -17,6 +17,8 @@ def test1 := show _ from do
   let (_, st) ← processLogFile path |>.run {}
   return st
 
+-- #eval test1
+
 -- Logs collectés par Clara dans le cours de Patrick
 def test2 := show _ from do
   let path := System.mkFilePath [".", "logs", "patrick",
@@ -26,6 +28,8 @@ def test2 := show _ from do
   let (_, st) ← processLogFile path |>.run {}
   return st
 
+-- #eval test2
+
 def test3 := show _ from do
   let path := System.mkFilePath [".", "logs", "patrick",
     "LSP_2026-02-11-15-37-46-3175+0100.log"
@@ -33,8 +37,6 @@ def test3 := show _ from do
   ]
   dumpFileStates path
 
-#eval test1
--- #eval test2
 -- #eval test3
 
 -- Test for InteractiveGoals
@@ -60,42 +62,71 @@ def f (path : System.FilePath): IO Unit := do
 
 -- #eval f (System.mkFilePath [".", "logs", "LSP_2025-11-25-16-54-08-9505+0100.log"])
 
-
--- -- Test for the collection of definitions
-def testCollectDefs fname contents := do
-  let env ← prepareBaseEnv fname `DummyModule
-  -- IO.println $ env.constants.toList.map (·.fst)
+-- Test for the collection of definitions
+def testCollectDefs contents (fileName := "<input>") := do
+  let env ← prepareBaseEnv fileName `DummyModule
   let doc : TextDocumentItem := {
-    uri := fname
+    uri := fileName
     text := contents
     languageId := "Lean"
     version := 1
   }
   let defs ← runCollectDefLikes env doc
   defs.forM (IO.println ·)
-  -- defs.forM (fun d : Definition => IO.println d.defview.ref)
+  defs.forM (fun d : Definition => IO.println d.defview?)
 
-def ex_fname := "/home/ameyer/Nextcloud/Eiffel/Code/lean4/lsp_log_analyzer/Example.lean"
+-- #eval testCollectDefs
+-- "variable {p q r : Prop}
 
-def ex_contents :=
-"import Lean
+-- theorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by
+--   sorry
 
-variable {p q r : Prop}
+-- theorem or_comm' (h : p ∨ q) : q ∨ p := by
+--   sorry
+-- "
+
+def testPrintProofStates (content : String) (fileName := "<input>") := do
+  let elabState ← initElabState content fileName
+  ppState elabState
+  (extractGoals elabState).forM fun (start, stop, ctx, ids) => do IO.println (← ctx.ppGoals ids)
+
+-- TODO : find a way to suppress dupes due to macro expansion?
+#eval testPrintProofStates
+"import Init.Prelude
+
+theorem test : True := by
+  trivial
+"
+
+-- #eval testPrintProofStates
+-- "import Mathlib
+
+-- theorem test : True := by
+--   trivial
+-- "
+
+#eval testPrintProofStates
+"variable {p q r : Prop}
 
 theorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by
   intro hp
   exact hqr (hpq hp)
-
-theorem or_comm' (h : p ∨ q) : q ∨ p := by
-  rcases h with h | h
-  right
-  exact h
-  left
-  exact h
 "
 
--- #eval IO.println $ normalizeText ex_contents
--- #eval testCollectDefs ex_fname ex_contents
+-- #eval testPrintProofStates
+-- "variable {p q r : Prop}
+
+-- theorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by
+--   intro hp
+--   exact hqr (hpq hp)
+
+-- theorem or_comm' (h : p ∨ q) : q ∨ p := by
+--   rcases h with h | h
+--   · right
+--     exact h
+--   · left
+--     exact h
+-- "
 
 def verbose_contents :=
 "import Mdd154.Lib

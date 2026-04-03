@@ -1,8 +1,9 @@
 import Lean
 import LSPLogAnalyzer.Definitions
 import LSPLogAnalyzer.Diagnostics
-import LSPLogAnalyzer.Utils
+import LSPLogAnalyzer.Elaboration
 import LSPLogAnalyzer.MyParser
+import LSPLogAnalyzer.Utils
 
 open Lean.Json
 open Lean.FromJson
@@ -20,7 +21,9 @@ def onDidOpen (time : ZonedDateTime) (notif : Notification Lean.Json) : TrackerM
   let fs ← ensureFile doc.uri
   let defArray ← runCollectDefLikes fs.baseEnv doc
   let defMap := .ofList <| defArray.toList.map fun d => (d.name.toString, #[d])
-  let snapshots := fs.snapshots.push ⟨time, doc, #[], #[]⟩
+  -- TODO : build and maintain common environment (across files) ?
+  let elabState ← initElabState doc.text doc.uri
+  let snapshots := fs.snapshots.push ⟨time, doc, #[], #[], elabState⟩
   let fs := { fs with snapshots, defMap, defArray, changes := #[] }
   modifyFileState doc.uri fs
 
@@ -40,11 +43,11 @@ def onPublishDiagnostics (notif : Notification Lean.Json) : TrackerM Unit := do
     | onError s!"Unable to parse publishDiagnostics parameters {notif.param}"
   updateDiagnostics params.uri params.diagnostics
 
-def onRpcResponse (_request : Request Lean.Json) (_response : Response Lean.Json) : TrackerM Unit := do
-  return
+-- def onRpcResponse (_request : Request Lean.Json) (_response : Response Lean.Json) : TrackerM Unit := do
+--   return
 
-def onGetInteractiveGoalsResponse (_response : Response Lean.Json) : TrackerM Unit := do
-  return  -- FIXME
+-- def onGetInteractiveGoalsResponse (_response : Response Lean.Json) : TrackerM Unit := do
+--   return  -- FIXME
 
 def processNotification
     (time : ZonedDateTime)
@@ -101,7 +104,7 @@ def processLogEntry (entry : LogEntry) : TrackerM Unit := do
   modify fun ts => { ts with line := ts.line + 1 }
 
 def processLogFile (path : System.FilePath) : TrackerM Unit := do
-  let entries ← collectLogEntries path
-  entries.forM processLogEntry
+  initializeBaseEnvironment
+  (← collectLogEntries path).forM processLogEntry
 
 end LSPLogAnalyzer
