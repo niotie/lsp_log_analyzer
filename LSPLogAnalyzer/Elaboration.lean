@@ -27,7 +27,17 @@ def initElabState (content fileName : String)
   let opts := Elab.async.set Options.empty false
   -- enableInitializersExecution
   let (header, parserState, messages) ← Parser.parseHeader inputCtx
+  -- dbg_trace header
   let (env, messages) ← processHeader header opts messages inputCtx
+  messages.reportedPlusUnreported.forM (fun msg => do
+    IO.println s!"{← msg.toString}")
+  -- dbg_trace env.imports
+  let env ← importModules -- WARNING: does not work properly on Lean >= 4.31
+    (imports := env.imports)
+    -- (imports := header.imports.map (·.module))
+    (opts := opts)
+    (trustLevel := 1024)
+    -- (loadExts := True)  -- requires enableInitializersExecution, but can't make it work
   let commandState := Command.mkState env messages opts
   return ← IO.processCommandsIncrementally
     inputCtx parserState commandState none

@@ -8,6 +8,12 @@ defaultTargets = ["lsp_log_analyzer"]
 [[lean_lib]]
 name = "LSPLogAnalyzer"
 
+[[require]]
+name = "Cli"
+scope = "leanprover"
+# version = "*"
+# options = {<options>}
+
 [[lean_exe]]
 name = "lsp_log_analyzer"
 root = "Main"

@@ -10,6 +10,7 @@ open Lsp
 open Std
 open Server.Test.Runner
 
+unsafe
 def test1 := show _ from do
   let path := System.mkFilePath [".", "logs",
     "LSP_2025-12-09-18-26-16-7165+0100.log"
@@ -20,6 +21,7 @@ def test1 := show _ from do
 -- #eval test1
 
 -- Logs collectés par Clara dans le cours de Patrick
+unsafe
 def test2 := show _ from do
   let path := System.mkFilePath [".", "logs", "patrick",
     "LSP_2026-02-11-15-37-46-3175+0100.log"
@@ -30,6 +32,7 @@ def test2 := show _ from do
 
 -- #eval test2
 
+unsafe
 def test3 := show _ from do
   let path := System.mkFilePath [".", "logs", "patrick",
     "LSP_2026-02-11-15-37-46-3175+0100.log"
@@ -85,17 +88,18 @@ def testCollectDefs contents (fileName := "<input>") := do
 --   sorry
 -- "
 
-def testPrintProofStates (content : String) (fileName := "<input>") := do
+unsafe def testPrintProofStates (content : String) (fileName := "<input>") := do
   let elabState ← initElabState content fileName
   ppState elabState
   (extractGoals elabState).forM fun (start, stop, ctx, ids) => do IO.println (← ctx.ppGoals ids)
 
 -- TODO : find a way to suppress dupes due to macro expansion?
-#eval testPrintProofStates
-"import Init.Prelude
+
+#eval testPrintProofStates "
+import Init.Prelude
 
 theorem test : True := by
-  trivial
+  exact
 "
 
 -- #eval testPrintProofStates
@@ -105,28 +109,30 @@ theorem test : True := by
 --   trivial
 -- "
 
-#eval testPrintProofStates
-"variable {p q r : Prop}
+#eval testPrintProofStates "
+import Init.Prelude
+
+variable {p q r : Prop}
 
 theorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by
   intro hp
   exact hqr (hpq hp)
 "
 
--- #eval testPrintProofStates
--- "variable {p q r : Prop}
+#eval testPrintProofStates "
+variable {p q r : Prop}
 
--- theorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by
---   intro hp
---   exact hqr (hpq hp)
+theorem imp_trans (hpq : p → q) (hqr : q → r) : p → r := by
+  intro hp
+  exact hqr (hpq hp)
 
--- theorem or_comm' (h : p ∨ q) : q ∨ p := by
---   rcases h with h | h
---   · right
---     exact h
---   · left
---     exact h
--- "
+theorem or_comm' (h : p ∨ q) : q ∨ p := by
+  rcases h with h | h
+  · right
+    exact h
+  · left
+    exact h
+"
 
 def verbose_contents :=
 "import Mdd154.Lib
